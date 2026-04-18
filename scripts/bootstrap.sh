@@ -4,7 +4,7 @@ set -euo pipefail
 cd /workspace
 
 # Python deps for the BitMLx pipeline + tests (use venv; Debian blocks global/user pip by default).
-VENV="/home/codex/.local/venv"
+VENV="/home/user/.local/venv"
 if [[ ! -x "${VENV}/bin/python" ]]; then
   python3 -m venv "${VENV}"
 fi

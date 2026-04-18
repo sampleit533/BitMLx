@@ -370,7 +370,7 @@ result = subprocess.run(
 )
 ```
 
-Lệnh gọi `docker_run.sh` với tham số là lệnh cần chạy bên trong container. `docker_run.sh` mount thư mục project vào `/workspace`, chạy dưới user `codex` (uid 1000), sử dụng named volumes cho cache. Pipeline `bitmlx_pipeline.sh UserCustom` chạy các bước: `stack run -- UserCustom` (biên dịch BitMLx sang BitML), `replace_hash.py` (thay placeholder hash), `racket` (biên dịch BitML sang .balzac), `read_statistics.py` (thống kê).
+Lệnh gọi `docker_run.sh` với tham số là lệnh cần chạy bên trong container. `docker_run.sh` mount thư mục project vào `/workspace`, chạy dưới user `user` (uid 1000), sử dụng named volumes cho cache. Pipeline `bitmlx_pipeline.sh UserCustom` chạy các bước: `stack run -- UserCustom` (biên dịch BitMLx sang BitML), `replace_hash.py` (thay placeholder hash), `racket` (biên dịch BitML sang .balzac), `read_statistics.py` (thống kê).
 
 `shlex.quote()` đảm bảo tên image và đường dẫn script được escape đúng, tránh shell injection.
 

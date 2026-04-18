@@ -16,10 +16,10 @@ ensure_volume_ownership blockchain_bitmlx_stack
 
 docker run --rm -t \
   -u 1000:1000 \
-  -e HOME=/home/codex \
+  -e HOME=/home/user \
   -v "${ROOT}:/workspace" \
-  -v blockchain_bitmlx_local:/home/codex/.local \
-  -v blockchain_bitmlx_stack:/home/codex/.stack \
+  -v blockchain_bitmlx_local:/home/user/.local \
+  -v blockchain_bitmlx_stack:/home/user/.stack \
   -w /workspace \
   "${IMAGE}" \
   bash -lc "$*"

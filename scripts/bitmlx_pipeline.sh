@@ -2,7 +2,7 @@
 set -euo pipefail
 
 EXAMPLE="${1:-all}"
-PYTHON="/home/codex/.local/venv/bin/python"
+PYTHON="/home/user/.local/venv/bin/python"
 
 cd /workspace/vendor/BitMLx
 mkdir -p output

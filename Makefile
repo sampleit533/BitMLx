@@ -16,7 +16,7 @@ compile-all: docker-build
 	IMAGE=$(IMAGE) ./scripts/docker_run.sh "./scripts/bootstrap.sh && ./scripts/bitmlx_pipeline.sh all"
 
 test: docker-build
-	IMAGE=$(IMAGE) ./scripts/docker_run.sh "./scripts/bootstrap.sh && /home/codex/.local/venv/bin/python -m pytest -q"
+	IMAGE=$(IMAGE) ./scripts/docker_run.sh "./scripts/bootstrap.sh && /home/user/.local/venv/bin/python -m pytest -q"
 
 clean:
 	rm -f vendor/BitMLx/output/*.balzac vendor/BitMLx/output/*_depth.txt vendor/BitMLx/output/statistics.txt

@@ -21,9 +21,9 @@ RUN curl -fsSL --retry 5 --retry-delay 2 --connect-timeout 10 --max-time 600 -o 
   && chmod +x /usr/local/bin/stack
 
 # Create a user matching the host default uid/gid (jalynk:1000)
-RUN groupadd -g 1000 codex && useradd -m -u 1000 -g 1000 -s /bin/bash codex
+RUN groupadd -g 1000 user && useradd -m -u 1000 -g 1000 -s /bin/bash user
 
-USER codex
+USER user
 WORKDIR /workspace
-ENV HOME=/home/codex
-ENV PATH="/home/codex/.local/bin:${PATH}"
+ENV HOME=/home/user
+ENV PATH="/home/user/.local/bin:${PATH}"
