@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 
 # BitMLx pipeline outputs
+vendor/BitMLx/output/*.rkt
 vendor/BitMLx/output/*.balzac
 vendor/BitMLx/output/*_depth.txt
 vendor/BitMLx/output/statistics.txt
