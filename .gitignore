@@ -8,6 +8,7 @@ vendor/BitMLx/output/*.rkt
 vendor/BitMLx/output/*.balzac
 vendor/BitMLx/output/*_depth.txt
 vendor/BitMLx/output/statistics.txt
+vendor/BitMLx/output/**
 
 # Haskell build
 vendor/BitMLx/.stack-work/
