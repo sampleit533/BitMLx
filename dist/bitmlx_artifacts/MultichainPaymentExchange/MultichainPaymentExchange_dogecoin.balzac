@@ -1,0 +1,2262 @@
+\\Compilation time: 102.0 ms
+
+const pubkeyX41 = pubkey:pkX
+const pubkeyX56 = pubkey:pkX
+const pubkeyC25 = pubkey:pkC
+const pubkeyX80 = pubkey:pkX
+const pubkeyX59 = pubkey:pkX
+const pubkeyR42 = pubkey:pkR
+const pubkeyX68 = pubkey:pkX
+const pubkeyC73 = pubkey:pkC
+const pubkeyR66 = pubkey:pkR
+const pubkeyC79 = pubkey:pkC
+const pubkeyX89 = pubkey:pkX
+const pubkeyC13 = pubkey:pkC
+const pubkeyR12 = pubkey:pkR
+const pubkeyX71 = pubkey:pkX
+const pubkeyX11 = pubkey:pkX
+const pubkeyR63 = pubkey:pkR
+const pubkeyC55 = pubkey:pkC
+const pubkeyR48 = pubkey:pkR
+const pubkeyC43 = pubkey:pkC
+const pubkeyX32 = pubkey:pkX
+const pubkeyR60 = pubkey:pkR
+const pubkeyC1 = pubkey:pkC
+const pubkeyC19 = pubkey:pkC
+const pubkeyC31 = pubkey:pkC
+const pubkeyX62 = pubkey:pkX
+const pubkeyR69 = pubkey:pkR
+const pubkeyR18 = pubkey:pkR
+const pubkeyC34 = pubkey:pkC
+const pubkeyX53 = pubkey:pkX
+const pubkeyC82 = pubkey:pkC
+const pubkeyX23 = pubkey:pkX
+const pubkeyC58 = pubkey:pkC
+const pubkeyX65 = pubkey:pkX
+const pubkeyC91 = pubkey:pkC
+const pubkeyR27 = pubkey:pkR
+const pubkeyR87 = pubkey:pkR
+const pubkeyX92 = pubkey:pkX
+const pubkeyC67 = pubkey:pkC
+const pubkeyR57 = pubkey:pkR
+const pubkeyC40 = pubkey:pkC
+const pubkeyR51 = pubkey:pkR
+const pubkeyX44 = pubkey:pkX
+const pubkeyC28 = pubkey:pkC
+const pubkeyC7 = pubkey:pkC
+const pubkeyX50 = pubkey:pkX
+const pubkeyX8 = pubkey:pkX
+const pubkeyR15 = pubkey:pkR
+const pubkeyR96 = pubkey:pkR
+const pubkeyC70 = pubkey:pkC
+const pubkeyC61 = pubkey:pkC
+const pubkeyR3 = pubkey:pkR
+const pubkeyR33 = pubkey:pkR
+const pubkeyX2 = pubkey:pkX
+const pubkeyC49 = pubkey:pkC
+const pubkeyR21 = pubkey:pkR
+const pubkeyC52 = pubkey:pkC
+const pubkeyR75 = pubkey:pkR
+const pubkeyC85 = pubkey:pkC
+const pubkeyR6 = pubkey:pkR
+const pubkeyC76 = pubkey:pkC
+const pubkeyC88 = pubkey:pkC
+const pubkeyC22 = pubkey:pkC
+const pubkeyR72 = pubkey:pkR
+const pubkeyC16 = pubkey:pkC
+const pubkeyX35 = pubkey:pkX
+const pubkeyR39 = pubkey:pkR
+const pubkeyX86 = pubkey:pkX
+const pubkeyR81 = pubkey:pkR
+const pubkeyX95 = pubkey:pkX
+const pubkeyX20 = pubkey:pkX
+const pubkeyR45 = pubkey:pkR
+const pubkeyC94 = pubkey:pkC
+const pubkeyX29 = pubkey:pkX
+const pubkeyR84 = pubkey:pkR
+const pubkeyX5 = pubkey:pkX
+const pubkeyX17 = pubkey:pkX
+const pubkeyX74 = pubkey:pkX
+const pubkeyC4 = pubkey:pkC
+const pubkeyC10 = pubkey:pkC
+const pubkeyX77 = pubkey:pkX
+const pubkeyR36 = pubkey:pkR
+const pubkeyX47 = pubkey:pkX
+const pubkeyX26 = pubkey:pkX
+const pubkeyC46 = pubkey:pkC
+const pubkeyC64 = pubkey:pkC
+const pubkeyX38 = pubkey:pkX
+const pubkeyC37 = pubkey:pkC
+const pubkeyR54 = pubkey:pkR
+const pubkeyX14 = pubkey:pkX
+const pubkeyR24 = pubkey:pkR
+const pubkeyX83 = pubkey:pkX
+const pubkeyR78 = pubkey:pkR
+const pubkeyR9 = pubkey:pkR
+const pubkeyR93 = pubkey:pkR
+const pubkeyR90 = pubkey:pkR
+const pubkeyR30 = pubkey:pkR
+
+const sec_StepSecret_C__L_ = _ //add value of secret StepSecret_C__L_
+const sec_StepSecret_R__L_ = _ //add value of secret StepSecret_R__L_
+const sec_StepSecret_X__L_ = _ //add value of secret StepSecret_X__L_
+const sec_StepSecret_C__LL_ = _ //add value of secret StepSecret_C__LL_
+const sec_StepSecret_R__LL_ = _ //add value of secret StepSecret_R__LL_
+const sec_StepSecret_X__LL_ = _ //add value of secret StepSecret_X__LL_
+const sec_StepSecret_C__LRL_ = _ //add value of secret StepSecret_C__LRL_
+const sec_StepSecret_R__LRL_ = _ //add value of secret StepSecret_R__LRL_
+const sec_StepSecret_X__LRL_ = _ //add value of secret StepSecret_X__LRL_
+const sec_StartSecret_C = _ //add value of secret StartSecret_C
+const sec_StartSecret_R = _ //add value of secret StartSecret_R
+const sec_StartSecret_X = _ //add value of secret StartSecret_X
+const pubkeyC = pubkey:pkC
+const pubkeyX = pubkey:pkX
+const pubkeyR = pubkey:pkR
+
+const sigX0 : signature = _ //add signature for output X_deposit_Dogecoin
+const sigR1 : signature = _ //add signature for output R_deposit_Dogecoin
+const sigC2 : signature = _ //add signature for output C_deposit_Dogecoin
+
+transaction Tinit { 
+ input = [ X_deposit_Dogecoin:sigX0; R_deposit_Dogecoin:sigR1; C_deposit_Dogecoin:sigC2;  ] 
+ output = 400 BTC : fun(StepSecret_C__L_:string, StartSecret_C:string, StartSecret_R:string, StartSecret_X:string, StepSecret_R__L_:string, StepSecret_X__L_:string, sC, sX, sR) . (( (hash160(StepSecret_C__L_) == hash:deecb5bef4d202d72568b80360257ca32680938cf133740db30634d0134b8870 && size(StepSecret_C__L_) >= 128 && hash160(StartSecret_C) == hash:14107ff3b19a890f53a99342c1914458c8599115d79736d1de16231c4752cb6f && size(StartSecret_C) >= 128 && hash160(StartSecret_R) == hash:63930eb5721e5f89199e798d03eaa186a3f54ea66ad97b38e65984d6d340f5a5 && size(StartSecret_R) >= 128 && hash160(StartSecret_X) == hash:7d2cfabcafa735414dd8122a945273bd1b87c30ec3e5454e54a60901e655531c && size(StartSecret_X) >= 128 && versig(pubkeyC1, pubkeyX2, pubkeyR3; sC, sX, sR)) ||
+ (hash160(StepSecret_R__L_) == hash:27b3d4500b42ddcd6ad4b0ad0f03199963753c7a8d56008b05b960aef120ed6c && size(StepSecret_R__L_) >= 128 && hash160(StartSecret_C) == hash:14107ff3b19a890f53a99342c1914458c8599115d79736d1de16231c4752cb6f && size(StartSecret_C) >= 128 && hash160(StartSecret_R) == hash:63930eb5721e5f89199e798d03eaa186a3f54ea66ad97b38e65984d6d340f5a5 && size(StartSecret_R) >= 128 && hash160(StartSecret_X) == hash:7d2cfabcafa735414dd8122a945273bd1b87c30ec3e5454e54a60901e655531c && size(StartSecret_X) >= 128 && versig(pubkeyC4, pubkeyX5, pubkeyR6; sC, sX, sR)) ||
+ (hash160(StepSecret_X__L_) == hash:31eb3f1a7654ffbe6e2c50d85cee3ce5996b9e3da5c96f8dfa3fa6aee53ae51e && size(StepSecret_X__L_) >= 128 && hash160(StartSecret_C) == hash:14107ff3b19a890f53a99342c1914458c8599115d79736d1de16231c4752cb6f && size(StartSecret_C) >= 128 && hash160(StartSecret_R) == hash:63930eb5721e5f89199e798d03eaa186a3f54ea66ad97b38e65984d6d340f5a5 && size(StartSecret_R) >= 128 && hash160(StartSecret_X) == hash:7d2cfabcafa735414dd8122a945273bd1b87c30ec3e5454e54a60901e655531c && size(StartSecret_X) >= 128 && versig(pubkeyC7, pubkeyX8, pubkeyR9; sC, sX, sR)) ||
+ versig(pubkeyC10, pubkeyX11, pubkeyR12; sC, sX, sR) )) 
+}
+
+const sigCT1 : signature = _ 
+const sigXT1 : signature = _ 
+const sigRT1 : signature = _ 
+
+
+transaction T1 { 
+ input = [ Tinit@0:sec_StepSecret_C__L_ sec_StartSecret_C sec_StartSecret_R sec_StartSecret_X 0 0 sigCT1 sigXT1 sigRT1 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . versig(pubkeyC13, pubkeyX14, pubkeyR15; sC, sX, sR) || versig(pubkeyC16, pubkeyX17, pubkeyR18; sC, sX, sR) || versig(pubkeyC19, pubkeyX20, pubkeyR21; sC, sX, sR) || versig(pubkeyC22, pubkeyX23, pubkeyR24; sC, sX, sR) 
+}
+
+const sigCT2 : signature = _ 
+const sigXT2 : signature = _ 
+const sigRT2 : signature = _ 
+
+
+transaction T2 { 
+ input = [ T1@0: sigCT2 sigXT2 sigRT2 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT3 : signature = _ 
+const sigXT3 : signature = _ 
+const sigRT3 : signature = _ 
+
+
+transaction T3 { 
+ input = [ T2@0: sigCT3 sigXT3 sigRT3 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT4 : signature = _ 
+const sigXT4 : signature = _ 
+const sigRT4 : signature = _ 
+
+transaction T4 { 
+ input = [ T3@0:  sigCT4 sigXT4 sigRT4 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT5 : signature = _ 
+const sigXT5 : signature = _ 
+const sigRT5 : signature = _ 
+
+transaction T5 { 
+ input = [ T3@1:  sigCT5 sigXT5 sigRT5 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT6 : signature = _ 
+const sigXT6 : signature = _ 
+const sigRT6 : signature = _ 
+
+transaction T6 { 
+ input = [ T3@2:  sigCT6 sigXT6 sigRT6 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT7 : signature = _ 
+const sigXT7 : signature = _ 
+const sigRT7 : signature = _ 
+
+
+transaction T7 { 
+ input = [ T1@0: sigCT7 sigXT7 sigRT7 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT8 : signature = _ 
+const sigXT8 : signature = _ 
+const sigRT8 : signature = _ 
+
+
+transaction T8 { 
+ input = [ T7@0: sigCT8 sigXT8 sigRT8 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT9 : signature = _ 
+const sigXT9 : signature = _ 
+const sigRT9 : signature = _ 
+
+transaction T9 { 
+ input = [ T8@0:  sigCT9 sigXT9 sigRT9 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT10 : signature = _ 
+const sigXT10 : signature = _ 
+const sigRT10 : signature = _ 
+
+transaction T10 { 
+ input = [ T8@1:  sigCT10 sigXT10 sigRT10 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT11 : signature = _ 
+const sigXT11 : signature = _ 
+const sigRT11 : signature = _ 
+
+transaction T11 { 
+ input = [ T8@2:  sigCT11 sigXT11 sigRT11 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT12 : signature = _ 
+const sigXT12 : signature = _ 
+const sigRT12 : signature = _ 
+
+
+transaction T12 { 
+ input = [ T1@0: sigCT12 sigXT12 sigRT12 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT13 : signature = _ 
+const sigXT13 : signature = _ 
+const sigRT13 : signature = _ 
+
+
+transaction T13 { 
+ input = [ T12@0: sigCT13 sigXT13 sigRT13 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT14 : signature = _ 
+const sigXT14 : signature = _ 
+const sigRT14 : signature = _ 
+
+transaction T14 { 
+ input = [ T13@0:  sigCT14 sigXT14 sigRT14 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT15 : signature = _ 
+const sigXT15 : signature = _ 
+const sigRT15 : signature = _ 
+
+transaction T15 { 
+ input = [ T13@1:  sigCT15 sigXT15 sigRT15 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT16 : signature = _ 
+const sigXT16 : signature = _ 
+const sigRT16 : signature = _ 
+
+transaction T16 { 
+ input = [ T13@2:  sigCT16 sigXT16 sigRT16 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT17 : signature = _ 
+const sigXT17 : signature = _ 
+const sigRT17 : signature = _ 
+
+
+transaction T17 { 
+ input = [ T1@0: sigCT17 sigXT17 sigRT17 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . (hash160(StepSecret_C__LL_) == hash:48063ddf2fa866ebee3b05e3e8697332b9ce34b059e3ea99580468b35601da9a && size(StepSecret_C__LL_) >= 128 && versig(pubkeyC37, pubkeyX38, pubkeyR39; sC, sX, sR)) || (hash160(StepSecret_R__LL_) == hash:54caf05855414464f92f3dc2ab5c0df6e8ebc62abb1fd3364b96f369ba3a2f93 && size(StepSecret_R__LL_) >= 128 && versig(pubkeyC40, pubkeyX41, pubkeyR42; sC, sX, sR)) || (hash160(StepSecret_X__LL_) == hash:61d3c4ce7834e27ac7c36ed423979a1ae9694e0d2d563e34c0f2099124be0027 && size(StepSecret_X__LL_) >= 128 && versig(pubkeyC43, pubkeyX44, pubkeyR45; sC, sX, sR)) || versig(pubkeyC46, pubkeyX47, pubkeyR48; sC, sX, sR) 
+}
+
+const sigCT18 : signature = _ 
+const sigXT18 : signature = _ 
+const sigRT18 : signature = _ 
+
+
+transaction T18 { 
+ input = [ T17@0: sigCT18 sigXT18 sigRT18 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT19 : signature = _ 
+const sigXT19 : signature = _ 
+const sigRT19 : signature = _ 
+
+
+transaction T19 { 
+ input = [ T18@0: sigCT19 sigXT19 sigRT19 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT20 : signature = _ 
+const sigXT20 : signature = _ 
+const sigRT20 : signature = _ 
+
+transaction T20 { 
+ input = [ T19@0:  sigCT20 sigXT20 sigRT20 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT21 : signature = _ 
+const sigXT21 : signature = _ 
+const sigRT21 : signature = _ 
+
+transaction T21 { 
+ input = [ T19@1:  sigCT21 sigXT21 sigRT21 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT22 : signature = _ 
+const sigXT22 : signature = _ 
+const sigRT22 : signature = _ 
+
+
+transaction T22 { 
+ input = [ T17@0: sigCT22 sigXT22 sigRT22 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT23 : signature = _ 
+const sigXT23 : signature = _ 
+const sigRT23 : signature = _ 
+
+
+transaction T23 { 
+ input = [ T22@0: sigCT23 sigXT23 sigRT23 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT24 : signature = _ 
+const sigXT24 : signature = _ 
+const sigRT24 : signature = _ 
+
+transaction T24 { 
+ input = [ T23@0:  sigCT24 sigXT24 sigRT24 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT25 : signature = _ 
+const sigXT25 : signature = _ 
+const sigRT25 : signature = _ 
+
+transaction T25 { 
+ input = [ T23@1:  sigCT25 sigXT25 sigRT25 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT26 : signature = _ 
+const sigXT26 : signature = _ 
+const sigRT26 : signature = _ 
+
+
+transaction T26 { 
+ input = [ T17@0: sigCT26 sigXT26 sigRT26 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT27 : signature = _ 
+const sigXT27 : signature = _ 
+const sigRT27 : signature = _ 
+
+
+transaction T27 { 
+ input = [ T26@0: sigCT27 sigXT27 sigRT27 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT28 : signature = _ 
+const sigXT28 : signature = _ 
+const sigRT28 : signature = _ 
+
+transaction T28 { 
+ input = [ T27@0:  sigCT28 sigXT28 sigRT28 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT29 : signature = _ 
+const sigXT29 : signature = _ 
+const sigRT29 : signature = _ 
+
+transaction T29 { 
+ input = [ T27@1:  sigCT29 sigXT29 sigRT29 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT30 : signature = _ 
+const sigXT30 : signature = _ 
+const sigRT30 : signature = _ 
+
+
+transaction T30 { 
+ input = [ T17@0: sigCT30 sigXT30 sigRT30 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC58, pubkeyX59, pubkeyR60; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC61, pubkeyX62, pubkeyR63; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC64, pubkeyX65, pubkeyR66; sC, sX, sR)) || versig(pubkeyC67, pubkeyX68, pubkeyR69; sC, sX, sR) 
+}
+
+const sigCT31 : signature = _ 
+const sigXT31 : signature = _ 
+const sigRT31 : signature = _ 
+
+
+transaction T31 { 
+ input = [ T30@0: sigCT31 sigXT31 sigRT31 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT32 : signature = _ 
+const sigXT32 : signature = _ 
+const sigRT32 : signature = _ 
+
+
+transaction T32 { 
+ input = [ T31@0: sigCT32 sigXT32 sigRT32 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT33 : signature = _ 
+const sigXT33 : signature = _ 
+const sigRT33 : signature = _ 
+
+transaction T33 { 
+ input = [ T32@0:  sigCT33 sigXT33 sigRT33 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT34 : signature = _ 
+const sigXT34 : signature = _ 
+const sigRT34 : signature = _ 
+
+transaction T34 { 
+ input = [ T32@1:  sigCT34 sigXT34 sigRT34 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT35 : signature = _ 
+const sigXT35 : signature = _ 
+const sigRT35 : signature = _ 
+
+transaction T35 { 
+ input = [ T32@2:  sigCT35 sigXT35 sigRT35 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT36 : signature = _ 
+const sigXT36 : signature = _ 
+const sigRT36 : signature = _ 
+
+
+transaction T36 { 
+ input = [ T30@0: sigCT36 sigXT36 sigRT36 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT37 : signature = _ 
+const sigXT37 : signature = _ 
+const sigRT37 : signature = _ 
+
+
+transaction T37 { 
+ input = [ T36@0: sigCT37 sigXT37 sigRT37 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT38 : signature = _ 
+const sigXT38 : signature = _ 
+const sigRT38 : signature = _ 
+
+transaction T38 { 
+ input = [ T37@0:  sigCT38 sigXT38 sigRT38 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT39 : signature = _ 
+const sigXT39 : signature = _ 
+const sigRT39 : signature = _ 
+
+transaction T39 { 
+ input = [ T37@1:  sigCT39 sigXT39 sigRT39 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT40 : signature = _ 
+const sigXT40 : signature = _ 
+const sigRT40 : signature = _ 
+
+transaction T40 { 
+ input = [ T37@2:  sigCT40 sigXT40 sigRT40 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT41 : signature = _ 
+const sigXT41 : signature = _ 
+const sigRT41 : signature = _ 
+
+
+transaction T41 { 
+ input = [ T30@0: sigCT41 sigXT41 sigRT41 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT42 : signature = _ 
+const sigXT42 : signature = _ 
+const sigRT42 : signature = _ 
+
+
+transaction T42 { 
+ input = [ T41@0: sigCT42 sigXT42 sigRT42 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT43 : signature = _ 
+const sigXT43 : signature = _ 
+const sigRT43 : signature = _ 
+
+transaction T43 { 
+ input = [ T42@0:  sigCT43 sigXT43 sigRT43 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT44 : signature = _ 
+const sigXT44 : signature = _ 
+const sigRT44 : signature = _ 
+
+transaction T44 { 
+ input = [ T42@1:  sigCT44 sigXT44 sigRT44 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT45 : signature = _ 
+const sigXT45 : signature = _ 
+const sigRT45 : signature = _ 
+
+transaction T45 { 
+ input = [ T42@2:  sigCT45 sigXT45 sigRT45 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT46 : signature = _ 
+const sigXT46 : signature = _ 
+const sigRT46 : signature = _ 
+
+
+transaction T46 { 
+ input = [ T30@0: sigCT46 sigXT46 sigRT46 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC73, pubkeyX74, pubkeyR75; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC76, pubkeyX77, pubkeyR78; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC79, pubkeyX80, pubkeyR81; sC, sX, sR)) || versig(pubkeyC82, pubkeyX83, pubkeyR84; sC, sX, sR) 
+}
+
+const sigCT47 : signature = _ 
+const sigXT47 : signature = _ 
+const sigRT47 : signature = _ 
+
+
+transaction T47 { 
+ input = [ T46@0: sigCT47 sigXT47 sigRT47 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT48 : signature = _ 
+const sigXT48 : signature = _ 
+const sigRT48 : signature = _ 
+
+
+transaction T48 { 
+ input = [ T47@0: sigCT48 sigXT48 sigRT48 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT49 : signature = _ 
+const sigXT49 : signature = _ 
+const sigRT49 : signature = _ 
+
+transaction T49 { 
+ input = [ T48@0:  sigCT49 sigXT49 sigRT49 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT50 : signature = _ 
+const sigXT50 : signature = _ 
+const sigRT50 : signature = _ 
+
+transaction T50 { 
+ input = [ T48@1:  sigCT50 sigXT50 sigRT50 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT51 : signature = _ 
+const sigXT51 : signature = _ 
+const sigRT51 : signature = _ 
+
+
+transaction T51 { 
+ input = [ T46@0: sigCT51 sigXT51 sigRT51 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT52 : signature = _ 
+const sigXT52 : signature = _ 
+const sigRT52 : signature = _ 
+
+
+transaction T52 { 
+ input = [ T51@0: sigCT52 sigXT52 sigRT52 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT53 : signature = _ 
+const sigXT53 : signature = _ 
+const sigRT53 : signature = _ 
+
+transaction T53 { 
+ input = [ T52@0:  sigCT53 sigXT53 sigRT53 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT54 : signature = _ 
+const sigXT54 : signature = _ 
+const sigRT54 : signature = _ 
+
+transaction T54 { 
+ input = [ T52@1:  sigCT54 sigXT54 sigRT54 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT55 : signature = _ 
+const sigXT55 : signature = _ 
+const sigRT55 : signature = _ 
+
+
+transaction T55 { 
+ input = [ T46@0: sigCT55 sigXT55 sigRT55 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT56 : signature = _ 
+const sigXT56 : signature = _ 
+const sigRT56 : signature = _ 
+
+
+transaction T56 { 
+ input = [ T55@0: sigCT56 sigXT56 sigRT56 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT57 : signature = _ 
+const sigXT57 : signature = _ 
+const sigRT57 : signature = _ 
+
+transaction T57 { 
+ input = [ T56@0:  sigCT57 sigXT57 sigRT57 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT58 : signature = _ 
+const sigXT58 : signature = _ 
+const sigRT58 : signature = _ 
+
+transaction T58 { 
+ input = [ T56@1:  sigCT58 sigXT58 sigRT58 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT59 : signature = _ 
+const sigXT59 : signature = _ 
+const sigRT59 : signature = _ 
+
+
+transaction T59 { 
+ input = [ T46@0: sigCT59 sigXT59 sigRT59 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT60 : signature = _ 
+const sigXT60 : signature = _ 
+const sigRT60 : signature = _ 
+
+
+transaction T60 { 
+ input = [ T59@0: sigCT60 sigXT60 sigRT60 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT61 : signature = _ 
+const sigXT61 : signature = _ 
+const sigRT61 : signature = _ 
+
+transaction T61 { 
+ input = [ T60@0:  sigCT61 sigXT61 sigRT61 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT62 : signature = _ 
+const sigXT62 : signature = _ 
+const sigRT62 : signature = _ 
+
+transaction T62 { 
+ input = [ T60@1:  sigCT62 sigXT62 sigRT62 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT63 : signature = _ 
+const sigXT63 : signature = _ 
+const sigRT63 : signature = _ 
+
+transaction T63 { 
+ input = [ T60@2:  sigCT63 sigXT63 sigRT63 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT64 : signature = _ 
+const sigXT64 : signature = _ 
+const sigRT64 : signature = _ 
+
+
+transaction T64 { 
+ input = [ Tinit@0:0 sec_StartSecret_C sec_StartSecret_R sec_StartSecret_X sec_StepSecret_R__L_ 0 sigCT64 sigXT64 sigRT64 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . versig(pubkeyC13, pubkeyX14, pubkeyR15; sC, sX, sR) || versig(pubkeyC16, pubkeyX17, pubkeyR18; sC, sX, sR) || versig(pubkeyC19, pubkeyX20, pubkeyR21; sC, sX, sR) || versig(pubkeyC22, pubkeyX23, pubkeyR24; sC, sX, sR) 
+}
+
+const sigCT65 : signature = _ 
+const sigXT65 : signature = _ 
+const sigRT65 : signature = _ 
+
+
+transaction T65 { 
+ input = [ T64@0: sigCT65 sigXT65 sigRT65 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT66 : signature = _ 
+const sigXT66 : signature = _ 
+const sigRT66 : signature = _ 
+
+
+transaction T66 { 
+ input = [ T65@0: sigCT66 sigXT66 sigRT66 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT67 : signature = _ 
+const sigXT67 : signature = _ 
+const sigRT67 : signature = _ 
+
+transaction T67 { 
+ input = [ T66@0:  sigCT67 sigXT67 sigRT67 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT68 : signature = _ 
+const sigXT68 : signature = _ 
+const sigRT68 : signature = _ 
+
+transaction T68 { 
+ input = [ T66@1:  sigCT68 sigXT68 sigRT68 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT69 : signature = _ 
+const sigXT69 : signature = _ 
+const sigRT69 : signature = _ 
+
+transaction T69 { 
+ input = [ T66@2:  sigCT69 sigXT69 sigRT69 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT70 : signature = _ 
+const sigXT70 : signature = _ 
+const sigRT70 : signature = _ 
+
+
+transaction T70 { 
+ input = [ T64@0: sigCT70 sigXT70 sigRT70 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT71 : signature = _ 
+const sigXT71 : signature = _ 
+const sigRT71 : signature = _ 
+
+
+transaction T71 { 
+ input = [ T70@0: sigCT71 sigXT71 sigRT71 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT72 : signature = _ 
+const sigXT72 : signature = _ 
+const sigRT72 : signature = _ 
+
+transaction T72 { 
+ input = [ T71@0:  sigCT72 sigXT72 sigRT72 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT73 : signature = _ 
+const sigXT73 : signature = _ 
+const sigRT73 : signature = _ 
+
+transaction T73 { 
+ input = [ T71@1:  sigCT73 sigXT73 sigRT73 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT74 : signature = _ 
+const sigXT74 : signature = _ 
+const sigRT74 : signature = _ 
+
+transaction T74 { 
+ input = [ T71@2:  sigCT74 sigXT74 sigRT74 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT75 : signature = _ 
+const sigXT75 : signature = _ 
+const sigRT75 : signature = _ 
+
+
+transaction T75 { 
+ input = [ T64@0: sigCT75 sigXT75 sigRT75 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT76 : signature = _ 
+const sigXT76 : signature = _ 
+const sigRT76 : signature = _ 
+
+
+transaction T76 { 
+ input = [ T75@0: sigCT76 sigXT76 sigRT76 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT77 : signature = _ 
+const sigXT77 : signature = _ 
+const sigRT77 : signature = _ 
+
+transaction T77 { 
+ input = [ T76@0:  sigCT77 sigXT77 sigRT77 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT78 : signature = _ 
+const sigXT78 : signature = _ 
+const sigRT78 : signature = _ 
+
+transaction T78 { 
+ input = [ T76@1:  sigCT78 sigXT78 sigRT78 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT79 : signature = _ 
+const sigXT79 : signature = _ 
+const sigRT79 : signature = _ 
+
+transaction T79 { 
+ input = [ T76@2:  sigCT79 sigXT79 sigRT79 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT80 : signature = _ 
+const sigXT80 : signature = _ 
+const sigRT80 : signature = _ 
+
+
+transaction T80 { 
+ input = [ T64@0: sigCT80 sigXT80 sigRT80 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . (hash160(StepSecret_C__LL_) == hash:48063ddf2fa866ebee3b05e3e8697332b9ce34b059e3ea99580468b35601da9a && size(StepSecret_C__LL_) >= 128 && versig(pubkeyC37, pubkeyX38, pubkeyR39; sC, sX, sR)) || (hash160(StepSecret_R__LL_) == hash:54caf05855414464f92f3dc2ab5c0df6e8ebc62abb1fd3364b96f369ba3a2f93 && size(StepSecret_R__LL_) >= 128 && versig(pubkeyC40, pubkeyX41, pubkeyR42; sC, sX, sR)) || (hash160(StepSecret_X__LL_) == hash:61d3c4ce7834e27ac7c36ed423979a1ae9694e0d2d563e34c0f2099124be0027 && size(StepSecret_X__LL_) >= 128 && versig(pubkeyC43, pubkeyX44, pubkeyR45; sC, sX, sR)) || versig(pubkeyC46, pubkeyX47, pubkeyR48; sC, sX, sR) 
+}
+
+const sigCT81 : signature = _ 
+const sigXT81 : signature = _ 
+const sigRT81 : signature = _ 
+
+
+transaction T81 { 
+ input = [ T80@0: sigCT81 sigXT81 sigRT81 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT82 : signature = _ 
+const sigXT82 : signature = _ 
+const sigRT82 : signature = _ 
+
+
+transaction T82 { 
+ input = [ T81@0: sigCT82 sigXT82 sigRT82 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT83 : signature = _ 
+const sigXT83 : signature = _ 
+const sigRT83 : signature = _ 
+
+transaction T83 { 
+ input = [ T82@0:  sigCT83 sigXT83 sigRT83 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT84 : signature = _ 
+const sigXT84 : signature = _ 
+const sigRT84 : signature = _ 
+
+transaction T84 { 
+ input = [ T82@1:  sigCT84 sigXT84 sigRT84 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT85 : signature = _ 
+const sigXT85 : signature = _ 
+const sigRT85 : signature = _ 
+
+
+transaction T85 { 
+ input = [ T80@0: sigCT85 sigXT85 sigRT85 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT86 : signature = _ 
+const sigXT86 : signature = _ 
+const sigRT86 : signature = _ 
+
+
+transaction T86 { 
+ input = [ T85@0: sigCT86 sigXT86 sigRT86 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT87 : signature = _ 
+const sigXT87 : signature = _ 
+const sigRT87 : signature = _ 
+
+transaction T87 { 
+ input = [ T86@0:  sigCT87 sigXT87 sigRT87 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT88 : signature = _ 
+const sigXT88 : signature = _ 
+const sigRT88 : signature = _ 
+
+transaction T88 { 
+ input = [ T86@1:  sigCT88 sigXT88 sigRT88 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT89 : signature = _ 
+const sigXT89 : signature = _ 
+const sigRT89 : signature = _ 
+
+
+transaction T89 { 
+ input = [ T80@0: sigCT89 sigXT89 sigRT89 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT90 : signature = _ 
+const sigXT90 : signature = _ 
+const sigRT90 : signature = _ 
+
+
+transaction T90 { 
+ input = [ T89@0: sigCT90 sigXT90 sigRT90 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT91 : signature = _ 
+const sigXT91 : signature = _ 
+const sigRT91 : signature = _ 
+
+transaction T91 { 
+ input = [ T90@0:  sigCT91 sigXT91 sigRT91 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT92 : signature = _ 
+const sigXT92 : signature = _ 
+const sigRT92 : signature = _ 
+
+transaction T92 { 
+ input = [ T90@1:  sigCT92 sigXT92 sigRT92 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT93 : signature = _ 
+const sigXT93 : signature = _ 
+const sigRT93 : signature = _ 
+
+
+transaction T93 { 
+ input = [ T80@0: sigCT93 sigXT93 sigRT93 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC58, pubkeyX59, pubkeyR60; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC61, pubkeyX62, pubkeyR63; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC64, pubkeyX65, pubkeyR66; sC, sX, sR)) || versig(pubkeyC67, pubkeyX68, pubkeyR69; sC, sX, sR) 
+}
+
+const sigCT94 : signature = _ 
+const sigXT94 : signature = _ 
+const sigRT94 : signature = _ 
+
+
+transaction T94 { 
+ input = [ T93@0: sigCT94 sigXT94 sigRT94 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT95 : signature = _ 
+const sigXT95 : signature = _ 
+const sigRT95 : signature = _ 
+
+
+transaction T95 { 
+ input = [ T94@0: sigCT95 sigXT95 sigRT95 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT96 : signature = _ 
+const sigXT96 : signature = _ 
+const sigRT96 : signature = _ 
+
+transaction T96 { 
+ input = [ T95@0:  sigCT96 sigXT96 sigRT96 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT97 : signature = _ 
+const sigXT97 : signature = _ 
+const sigRT97 : signature = _ 
+
+transaction T97 { 
+ input = [ T95@1:  sigCT97 sigXT97 sigRT97 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT98 : signature = _ 
+const sigXT98 : signature = _ 
+const sigRT98 : signature = _ 
+
+transaction T98 { 
+ input = [ T95@2:  sigCT98 sigXT98 sigRT98 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT99 : signature = _ 
+const sigXT99 : signature = _ 
+const sigRT99 : signature = _ 
+
+
+transaction T99 { 
+ input = [ T93@0: sigCT99 sigXT99 sigRT99 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT100 : signature = _ 
+const sigXT100 : signature = _ 
+const sigRT100 : signature = _ 
+
+
+transaction T100 { 
+ input = [ T99@0: sigCT100 sigXT100 sigRT100 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT101 : signature = _ 
+const sigXT101 : signature = _ 
+const sigRT101 : signature = _ 
+
+transaction T101 { 
+ input = [ T100@0:  sigCT101 sigXT101 sigRT101 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT102 : signature = _ 
+const sigXT102 : signature = _ 
+const sigRT102 : signature = _ 
+
+transaction T102 { 
+ input = [ T100@1:  sigCT102 sigXT102 sigRT102 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT103 : signature = _ 
+const sigXT103 : signature = _ 
+const sigRT103 : signature = _ 
+
+transaction T103 { 
+ input = [ T100@2:  sigCT103 sigXT103 sigRT103 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT104 : signature = _ 
+const sigXT104 : signature = _ 
+const sigRT104 : signature = _ 
+
+
+transaction T104 { 
+ input = [ T93@0: sigCT104 sigXT104 sigRT104 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT105 : signature = _ 
+const sigXT105 : signature = _ 
+const sigRT105 : signature = _ 
+
+
+transaction T105 { 
+ input = [ T104@0: sigCT105 sigXT105 sigRT105 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT106 : signature = _ 
+const sigXT106 : signature = _ 
+const sigRT106 : signature = _ 
+
+transaction T106 { 
+ input = [ T105@0:  sigCT106 sigXT106 sigRT106 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT107 : signature = _ 
+const sigXT107 : signature = _ 
+const sigRT107 : signature = _ 
+
+transaction T107 { 
+ input = [ T105@1:  sigCT107 sigXT107 sigRT107 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT108 : signature = _ 
+const sigXT108 : signature = _ 
+const sigRT108 : signature = _ 
+
+transaction T108 { 
+ input = [ T105@2:  sigCT108 sigXT108 sigRT108 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT109 : signature = _ 
+const sigXT109 : signature = _ 
+const sigRT109 : signature = _ 
+
+
+transaction T109 { 
+ input = [ T93@0: sigCT109 sigXT109 sigRT109 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC73, pubkeyX74, pubkeyR75; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC76, pubkeyX77, pubkeyR78; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC79, pubkeyX80, pubkeyR81; sC, sX, sR)) || versig(pubkeyC82, pubkeyX83, pubkeyR84; sC, sX, sR) 
+}
+
+const sigCT110 : signature = _ 
+const sigXT110 : signature = _ 
+const sigRT110 : signature = _ 
+
+
+transaction T110 { 
+ input = [ T109@0: sigCT110 sigXT110 sigRT110 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT111 : signature = _ 
+const sigXT111 : signature = _ 
+const sigRT111 : signature = _ 
+
+
+transaction T111 { 
+ input = [ T110@0: sigCT111 sigXT111 sigRT111 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT112 : signature = _ 
+const sigXT112 : signature = _ 
+const sigRT112 : signature = _ 
+
+transaction T112 { 
+ input = [ T111@0:  sigCT112 sigXT112 sigRT112 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT113 : signature = _ 
+const sigXT113 : signature = _ 
+const sigRT113 : signature = _ 
+
+transaction T113 { 
+ input = [ T111@1:  sigCT113 sigXT113 sigRT113 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT114 : signature = _ 
+const sigXT114 : signature = _ 
+const sigRT114 : signature = _ 
+
+
+transaction T114 { 
+ input = [ T109@0: sigCT114 sigXT114 sigRT114 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT115 : signature = _ 
+const sigXT115 : signature = _ 
+const sigRT115 : signature = _ 
+
+
+transaction T115 { 
+ input = [ T114@0: sigCT115 sigXT115 sigRT115 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT116 : signature = _ 
+const sigXT116 : signature = _ 
+const sigRT116 : signature = _ 
+
+transaction T116 { 
+ input = [ T115@0:  sigCT116 sigXT116 sigRT116 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT117 : signature = _ 
+const sigXT117 : signature = _ 
+const sigRT117 : signature = _ 
+
+transaction T117 { 
+ input = [ T115@1:  sigCT117 sigXT117 sigRT117 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT118 : signature = _ 
+const sigXT118 : signature = _ 
+const sigRT118 : signature = _ 
+
+
+transaction T118 { 
+ input = [ T109@0: sigCT118 sigXT118 sigRT118 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT119 : signature = _ 
+const sigXT119 : signature = _ 
+const sigRT119 : signature = _ 
+
+
+transaction T119 { 
+ input = [ T118@0: sigCT119 sigXT119 sigRT119 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT120 : signature = _ 
+const sigXT120 : signature = _ 
+const sigRT120 : signature = _ 
+
+transaction T120 { 
+ input = [ T119@0:  sigCT120 sigXT120 sigRT120 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT121 : signature = _ 
+const sigXT121 : signature = _ 
+const sigRT121 : signature = _ 
+
+transaction T121 { 
+ input = [ T119@1:  sigCT121 sigXT121 sigRT121 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT122 : signature = _ 
+const sigXT122 : signature = _ 
+const sigRT122 : signature = _ 
+
+
+transaction T122 { 
+ input = [ T109@0: sigCT122 sigXT122 sigRT122 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT123 : signature = _ 
+const sigXT123 : signature = _ 
+const sigRT123 : signature = _ 
+
+
+transaction T123 { 
+ input = [ T122@0: sigCT123 sigXT123 sigRT123 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT124 : signature = _ 
+const sigXT124 : signature = _ 
+const sigRT124 : signature = _ 
+
+transaction T124 { 
+ input = [ T123@0:  sigCT124 sigXT124 sigRT124 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT125 : signature = _ 
+const sigXT125 : signature = _ 
+const sigRT125 : signature = _ 
+
+transaction T125 { 
+ input = [ T123@1:  sigCT125 sigXT125 sigRT125 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT126 : signature = _ 
+const sigXT126 : signature = _ 
+const sigRT126 : signature = _ 
+
+transaction T126 { 
+ input = [ T123@2:  sigCT126 sigXT126 sigRT126 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT127 : signature = _ 
+const sigXT127 : signature = _ 
+const sigRT127 : signature = _ 
+
+
+transaction T127 { 
+ input = [ Tinit@0:0 sec_StartSecret_C sec_StartSecret_R sec_StartSecret_X 0 sec_StepSecret_X__L_ sigCT127 sigXT127 sigRT127 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . versig(pubkeyC13, pubkeyX14, pubkeyR15; sC, sX, sR) || versig(pubkeyC16, pubkeyX17, pubkeyR18; sC, sX, sR) || versig(pubkeyC19, pubkeyX20, pubkeyR21; sC, sX, sR) || versig(pubkeyC22, pubkeyX23, pubkeyR24; sC, sX, sR) 
+}
+
+const sigCT128 : signature = _ 
+const sigXT128 : signature = _ 
+const sigRT128 : signature = _ 
+
+
+transaction T128 { 
+ input = [ T127@0: sigCT128 sigXT128 sigRT128 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT129 : signature = _ 
+const sigXT129 : signature = _ 
+const sigRT129 : signature = _ 
+
+
+transaction T129 { 
+ input = [ T128@0: sigCT129 sigXT129 sigRT129 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT130 : signature = _ 
+const sigXT130 : signature = _ 
+const sigRT130 : signature = _ 
+
+transaction T130 { 
+ input = [ T129@0:  sigCT130 sigXT130 sigRT130 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT131 : signature = _ 
+const sigXT131 : signature = _ 
+const sigRT131 : signature = _ 
+
+transaction T131 { 
+ input = [ T129@1:  sigCT131 sigXT131 sigRT131 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT132 : signature = _ 
+const sigXT132 : signature = _ 
+const sigRT132 : signature = _ 
+
+transaction T132 { 
+ input = [ T129@2:  sigCT132 sigXT132 sigRT132 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT133 : signature = _ 
+const sigXT133 : signature = _ 
+const sigRT133 : signature = _ 
+
+
+transaction T133 { 
+ input = [ T127@0: sigCT133 sigXT133 sigRT133 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT134 : signature = _ 
+const sigXT134 : signature = _ 
+const sigRT134 : signature = _ 
+
+
+transaction T134 { 
+ input = [ T133@0: sigCT134 sigXT134 sigRT134 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT135 : signature = _ 
+const sigXT135 : signature = _ 
+const sigRT135 : signature = _ 
+
+transaction T135 { 
+ input = [ T134@0:  sigCT135 sigXT135 sigRT135 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT136 : signature = _ 
+const sigXT136 : signature = _ 
+const sigRT136 : signature = _ 
+
+transaction T136 { 
+ input = [ T134@1:  sigCT136 sigXT136 sigRT136 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT137 : signature = _ 
+const sigXT137 : signature = _ 
+const sigRT137 : signature = _ 
+
+transaction T137 { 
+ input = [ T134@2:  sigCT137 sigXT137 sigRT137 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT138 : signature = _ 
+const sigXT138 : signature = _ 
+const sigRT138 : signature = _ 
+
+
+transaction T138 { 
+ input = [ T127@0: sigCT138 sigXT138 sigRT138 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT139 : signature = _ 
+const sigXT139 : signature = _ 
+const sigRT139 : signature = _ 
+
+
+transaction T139 { 
+ input = [ T138@0: sigCT139 sigXT139 sigRT139 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT140 : signature = _ 
+const sigXT140 : signature = _ 
+const sigRT140 : signature = _ 
+
+transaction T140 { 
+ input = [ T139@0:  sigCT140 sigXT140 sigRT140 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT141 : signature = _ 
+const sigXT141 : signature = _ 
+const sigRT141 : signature = _ 
+
+transaction T141 { 
+ input = [ T139@1:  sigCT141 sigXT141 sigRT141 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT142 : signature = _ 
+const sigXT142 : signature = _ 
+const sigRT142 : signature = _ 
+
+transaction T142 { 
+ input = [ T139@2:  sigCT142 sigXT142 sigRT142 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT143 : signature = _ 
+const sigXT143 : signature = _ 
+const sigRT143 : signature = _ 
+
+
+transaction T143 { 
+ input = [ T127@0: sigCT143 sigXT143 sigRT143 ] 
+ output = 400 BTC : fun(StepSecret_C__LL_:string, StepSecret_R__LL_:string, StepSecret_X__LL_:string, sC, sX, sR) . (hash160(StepSecret_C__LL_) == hash:48063ddf2fa866ebee3b05e3e8697332b9ce34b059e3ea99580468b35601da9a && size(StepSecret_C__LL_) >= 128 && versig(pubkeyC37, pubkeyX38, pubkeyR39; sC, sX, sR)) || (hash160(StepSecret_R__LL_) == hash:54caf05855414464f92f3dc2ab5c0df6e8ebc62abb1fd3364b96f369ba3a2f93 && size(StepSecret_R__LL_) >= 128 && versig(pubkeyC40, pubkeyX41, pubkeyR42; sC, sX, sR)) || (hash160(StepSecret_X__LL_) == hash:61d3c4ce7834e27ac7c36ed423979a1ae9694e0d2d563e34c0f2099124be0027 && size(StepSecret_X__LL_) >= 128 && versig(pubkeyC43, pubkeyX44, pubkeyR45; sC, sX, sR)) || versig(pubkeyC46, pubkeyX47, pubkeyR48; sC, sX, sR) 
+}
+
+const sigCT144 : signature = _ 
+const sigXT144 : signature = _ 
+const sigRT144 : signature = _ 
+
+
+transaction T144 { 
+ input = [ T143@0: sigCT144 sigXT144 sigRT144 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT145 : signature = _ 
+const sigXT145 : signature = _ 
+const sigRT145 : signature = _ 
+
+
+transaction T145 { 
+ input = [ T144@0: sigCT145 sigXT145 sigRT145 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT146 : signature = _ 
+const sigXT146 : signature = _ 
+const sigRT146 : signature = _ 
+
+transaction T146 { 
+ input = [ T145@0:  sigCT146 sigXT146 sigRT146 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT147 : signature = _ 
+const sigXT147 : signature = _ 
+const sigRT147 : signature = _ 
+
+transaction T147 { 
+ input = [ T145@1:  sigCT147 sigXT147 sigRT147 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT148 : signature = _ 
+const sigXT148 : signature = _ 
+const sigRT148 : signature = _ 
+
+
+transaction T148 { 
+ input = [ T143@0: sigCT148 sigXT148 sigRT148 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT149 : signature = _ 
+const sigXT149 : signature = _ 
+const sigRT149 : signature = _ 
+
+
+transaction T149 { 
+ input = [ T148@0: sigCT149 sigXT149 sigRT149 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT150 : signature = _ 
+const sigXT150 : signature = _ 
+const sigRT150 : signature = _ 
+
+transaction T150 { 
+ input = [ T149@0:  sigCT150 sigXT150 sigRT150 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT151 : signature = _ 
+const sigXT151 : signature = _ 
+const sigRT151 : signature = _ 
+
+transaction T151 { 
+ input = [ T149@1:  sigCT151 sigXT151 sigRT151 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT152 : signature = _ 
+const sigXT152 : signature = _ 
+const sigRT152 : signature = _ 
+
+
+transaction T152 { 
+ input = [ T143@0: sigCT152 sigXT152 sigRT152 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT153 : signature = _ 
+const sigXT153 : signature = _ 
+const sigRT153 : signature = _ 
+
+
+transaction T153 { 
+ input = [ T152@0: sigCT153 sigXT153 sigRT153 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT154 : signature = _ 
+const sigXT154 : signature = _ 
+const sigRT154 : signature = _ 
+
+transaction T154 { 
+ input = [ T153@0:  sigCT154 sigXT154 sigRT154 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT155 : signature = _ 
+const sigXT155 : signature = _ 
+const sigRT155 : signature = _ 
+
+transaction T155 { 
+ input = [ T153@1:  sigCT155 sigXT155 sigRT155 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT156 : signature = _ 
+const sigXT156 : signature = _ 
+const sigRT156 : signature = _ 
+
+
+transaction T156 { 
+ input = [ T143@0: sigCT156 sigXT156 sigRT156 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC58, pubkeyX59, pubkeyR60; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC61, pubkeyX62, pubkeyR63; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC64, pubkeyX65, pubkeyR66; sC, sX, sR)) || versig(pubkeyC67, pubkeyX68, pubkeyR69; sC, sX, sR) 
+}
+
+const sigCT157 : signature = _ 
+const sigXT157 : signature = _ 
+const sigRT157 : signature = _ 
+
+
+transaction T157 { 
+ input = [ T156@0: sigCT157 sigXT157 sigRT157 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT158 : signature = _ 
+const sigXT158 : signature = _ 
+const sigRT158 : signature = _ 
+
+
+transaction T158 { 
+ input = [ T157@0: sigCT158 sigXT158 sigRT158 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT159 : signature = _ 
+const sigXT159 : signature = _ 
+const sigRT159 : signature = _ 
+
+transaction T159 { 
+ input = [ T158@0:  sigCT159 sigXT159 sigRT159 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT160 : signature = _ 
+const sigXT160 : signature = _ 
+const sigRT160 : signature = _ 
+
+transaction T160 { 
+ input = [ T158@1:  sigCT160 sigXT160 sigRT160 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT161 : signature = _ 
+const sigXT161 : signature = _ 
+const sigRT161 : signature = _ 
+
+transaction T161 { 
+ input = [ T158@2:  sigCT161 sigXT161 sigRT161 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT162 : signature = _ 
+const sigXT162 : signature = _ 
+const sigRT162 : signature = _ 
+
+
+transaction T162 { 
+ input = [ T156@0: sigCT162 sigXT162 sigRT162 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT163 : signature = _ 
+const sigXT163 : signature = _ 
+const sigRT163 : signature = _ 
+
+
+transaction T163 { 
+ input = [ T162@0: sigCT163 sigXT163 sigRT163 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT164 : signature = _ 
+const sigXT164 : signature = _ 
+const sigRT164 : signature = _ 
+
+transaction T164 { 
+ input = [ T163@0:  sigCT164 sigXT164 sigRT164 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT165 : signature = _ 
+const sigXT165 : signature = _ 
+const sigRT165 : signature = _ 
+
+transaction T165 { 
+ input = [ T163@1:  sigCT165 sigXT165 sigRT165 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT166 : signature = _ 
+const sigXT166 : signature = _ 
+const sigRT166 : signature = _ 
+
+transaction T166 { 
+ input = [ T163@2:  sigCT166 sigXT166 sigRT166 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT167 : signature = _ 
+const sigXT167 : signature = _ 
+const sigRT167 : signature = _ 
+
+
+transaction T167 { 
+ input = [ T156@0: sigCT167 sigXT167 sigRT167 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC70, pubkeyX71, pubkeyR72; sC, sX, sR) 
+}
+
+const sigCT168 : signature = _ 
+const sigXT168 : signature = _ 
+const sigRT168 : signature = _ 
+
+
+transaction T168 { 
+ input = [ T167@0: sigCT168 sigXT168 sigRT168 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT169 : signature = _ 
+const sigXT169 : signature = _ 
+const sigRT169 : signature = _ 
+
+transaction T169 { 
+ input = [ T168@0:  sigCT169 sigXT169 sigRT169 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT170 : signature = _ 
+const sigXT170 : signature = _ 
+const sigRT170 : signature = _ 
+
+transaction T170 { 
+ input = [ T168@1:  sigCT170 sigXT170 sigRT170 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT171 : signature = _ 
+const sigXT171 : signature = _ 
+const sigRT171 : signature = _ 
+
+transaction T171 { 
+ input = [ T168@2:  sigCT171 sigXT171 sigRT171 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT172 : signature = _ 
+const sigXT172 : signature = _ 
+const sigRT172 : signature = _ 
+
+
+transaction T172 { 
+ input = [ T156@0: sigCT172 sigXT172 sigRT172 ] 
+ output = 400 BTC : fun(StepSecret_C__LRL_:string, StepSecret_R__LRL_:string, StepSecret_X__LRL_:string, sC, sX, sR) . (hash160(StepSecret_C__LRL_) == hash:52f38413f71bec6515e4754366674f904f6bef0fbd34d9a349be736a965b6adf && size(StepSecret_C__LRL_) >= 128 && versig(pubkeyC73, pubkeyX74, pubkeyR75; sC, sX, sR)) || (hash160(StepSecret_R__LRL_) == hash:28c8c52a467eeff3847598de7e89e4d0c8a8d3e4df9599ccb3fd769f1ec2e728 && size(StepSecret_R__LRL_) >= 128 && versig(pubkeyC76, pubkeyX77, pubkeyR78; sC, sX, sR)) || (hash160(StepSecret_X__LRL_) == hash:9d6a026335ae0a8a556f630312935d5c63d19d09553987a508a46be87b8cd1be && size(StepSecret_X__LRL_) >= 128 && versig(pubkeyC79, pubkeyX80, pubkeyR81; sC, sX, sR)) || versig(pubkeyC82, pubkeyX83, pubkeyR84; sC, sX, sR) 
+}
+
+const sigCT173 : signature = _ 
+const sigXT173 : signature = _ 
+const sigRT173 : signature = _ 
+
+
+transaction T173 { 
+ input = [ T172@0: sigCT173 sigXT173 sigRT173 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT174 : signature = _ 
+const sigXT174 : signature = _ 
+const sigRT174 : signature = _ 
+
+
+transaction T174 { 
+ input = [ T173@0: sigCT174 sigXT174 sigRT174 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT175 : signature = _ 
+const sigXT175 : signature = _ 
+const sigRT175 : signature = _ 
+
+transaction T175 { 
+ input = [ T174@0:  sigCT175 sigXT175 sigRT175 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT176 : signature = _ 
+const sigXT176 : signature = _ 
+const sigRT176 : signature = _ 
+
+transaction T176 { 
+ input = [ T174@1:  sigCT176 sigXT176 sigRT176 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT177 : signature = _ 
+const sigXT177 : signature = _ 
+const sigRT177 : signature = _ 
+
+
+transaction T177 { 
+ input = [ T172@0: sigCT177 sigXT177 sigRT177 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT178 : signature = _ 
+const sigXT178 : signature = _ 
+const sigRT178 : signature = _ 
+
+
+transaction T178 { 
+ input = [ T177@0: sigCT178 sigXT178 sigRT178 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT179 : signature = _ 
+const sigXT179 : signature = _ 
+const sigRT179 : signature = _ 
+
+transaction T179 { 
+ input = [ T178@0:  sigCT179 sigXT179 sigRT179 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT180 : signature = _ 
+const sigXT180 : signature = _ 
+const sigRT180 : signature = _ 
+
+transaction T180 { 
+ input = [ T178@1:  sigCT180 sigXT180 sigRT180 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT181 : signature = _ 
+const sigXT181 : signature = _ 
+const sigRT181 : signature = _ 
+
+
+transaction T181 { 
+ input = [ T172@0: sigCT181 sigXT181 sigRT181 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT182 : signature = _ 
+const sigXT182 : signature = _ 
+const sigRT182 : signature = _ 
+
+
+transaction T182 { 
+ input = [ T181@0: sigCT182 sigXT182 sigRT182 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT183 : signature = _ 
+const sigXT183 : signature = _ 
+const sigRT183 : signature = _ 
+
+transaction T183 { 
+ input = [ T182@0:  sigCT183 sigXT183 sigRT183 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT184 : signature = _ 
+const sigXT184 : signature = _ 
+const sigRT184 : signature = _ 
+
+transaction T184 { 
+ input = [ T182@1:  sigCT184 sigXT184 sigRT184 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT185 : signature = _ 
+const sigXT185 : signature = _ 
+const sigRT185 : signature = _ 
+
+
+transaction T185 { 
+ input = [ T172@0: sigCT185 sigXT185 sigRT185 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT186 : signature = _ 
+const sigXT186 : signature = _ 
+const sigRT186 : signature = _ 
+
+
+transaction T186 { 
+ input = [ T185@0: sigCT186 sigXT186 sigRT186 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT187 : signature = _ 
+const sigXT187 : signature = _ 
+const sigRT187 : signature = _ 
+
+transaction T187 { 
+ input = [ T186@0:  sigCT187 sigXT187 sigRT187 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT188 : signature = _ 
+const sigXT188 : signature = _ 
+const sigRT188 : signature = _ 
+
+transaction T188 { 
+ input = [ T186@1:  sigCT188 sigXT188 sigRT188 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT189 : signature = _ 
+const sigXT189 : signature = _ 
+const sigRT189 : signature = _ 
+
+transaction T189 { 
+ input = [ T186@2:  sigCT189 sigXT189 sigRT189 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT190 : signature = _ 
+const sigXT190 : signature = _ 
+const sigRT190 : signature = _ 
+
+
+transaction T190 { 
+ input = [ Tinit@0:0 0 0 0 0 0 sigCT190 sigXT190 sigRT190 ] 
+ output = 400 BTC : fun(StepSecret_C__L_:string, StepSecret_R__L_:string, StepSecret_X__L_:string, sC, sX, sR) . (hash160(StepSecret_C__L_) == hash:deecb5bef4d202d72568b80360257ca32680938cf133740db30634d0134b8870 && size(StepSecret_C__L_) >= 128 && versig(pubkeyC85, pubkeyX86, pubkeyR87; sC, sX, sR)) || (hash160(StepSecret_R__L_) == hash:27b3d4500b42ddcd6ad4b0ad0f03199963753c7a8d56008b05b960aef120ed6c && size(StepSecret_R__L_) >= 128 && versig(pubkeyC88, pubkeyX89, pubkeyR90; sC, sX, sR)) || (hash160(StepSecret_X__L_) == hash:31eb3f1a7654ffbe6e2c50d85cee3ce5996b9e3da5c96f8dfa3fa6aee53ae51e && size(StepSecret_X__L_) >= 128 && versig(pubkeyC91, pubkeyX92, pubkeyR93; sC, sX, sR)) || versig(pubkeyC94, pubkeyX95, pubkeyR96; sC, sX, sR) 
+}
+
+const sigCT191 : signature = _ 
+const sigXT191 : signature = _ 
+const sigRT191 : signature = _ 
+
+
+transaction T191 { 
+ input = [ T190@0: sigCT191 sigXT191 sigRT191 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC49, pubkeyX50, pubkeyR51; sC, sX, sR) 
+}
+
+const sigCT192 : signature = _ 
+const sigXT192 : signature = _ 
+const sigRT192 : signature = _ 
+
+
+transaction T192 { 
+ input = [ T191@0: sigCT192 sigXT192 sigRT192 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT193 : signature = _ 
+const sigXT193 : signature = _ 
+const sigRT193 : signature = _ 
+
+transaction T193 { 
+ input = [ T192@0:  sigCT193 sigXT193 sigRT193 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT194 : signature = _ 
+const sigXT194 : signature = _ 
+const sigRT194 : signature = _ 
+
+transaction T194 { 
+ input = [ T192@1:  sigCT194 sigXT194 sigRT194 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT195 : signature = _ 
+const sigXT195 : signature = _ 
+const sigRT195 : signature = _ 
+
+
+transaction T195 { 
+ input = [ T190@0: sigCT195 sigXT195 sigRT195 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC52, pubkeyX53, pubkeyR54; sC, sX, sR) 
+}
+
+const sigCT196 : signature = _ 
+const sigXT196 : signature = _ 
+const sigRT196 : signature = _ 
+
+
+transaction T196 { 
+ input = [ T195@0: sigCT196 sigXT196 sigRT196 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT197 : signature = _ 
+const sigXT197 : signature = _ 
+const sigRT197 : signature = _ 
+
+transaction T197 { 
+ input = [ T196@0:  sigCT197 sigXT197 sigRT197 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT198 : signature = _ 
+const sigXT198 : signature = _ 
+const sigRT198 : signature = _ 
+
+transaction T198 { 
+ input = [ T196@1:  sigCT198 sigXT198 sigRT198 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+
+const sigCT199 : signature = _ 
+const sigXT199 : signature = _ 
+const sigRT199 : signature = _ 
+
+
+transaction T199 { 
+ input = [ T190@0: sigCT199 sigXT199 sigRT199 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC55, pubkeyX56, pubkeyR57; sC, sX, sR) 
+}
+
+const sigCT200 : signature = _ 
+const sigXT200 : signature = _ 
+const sigRT200 : signature = _ 
+
+
+transaction T200 { 
+ input = [ T199@0: sigCT200 sigXT200 sigRT200 ] 
+ output = [ 200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR))) ] 
+}
+
+const sigCT201 : signature = _ 
+const sigXT201 : signature = _ 
+const sigRT201 : signature = _ 
+
+transaction T201 { 
+ input = [ T200@0:  sigCT201 sigXT201 sigRT201 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT202 : signature = _ 
+const sigXT202 : signature = _ 
+const sigRT202 : signature = _ 
+
+transaction T202 { 
+ input = [ T200@1:  sigCT202 sigXT202 sigRT202 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT203 : signature = _ 
+const sigXT203 : signature = _ 
+const sigRT203 : signature = _ 
+
+
+transaction T203 { 
+ input = [ T190@0: sigCT203 sigXT203 sigRT203 ] 
+ output = 400 BTC : fun(sC, sX, sR) . versig(pubkeyC25, pubkeyX26, pubkeyR27; sC, sX, sR) 
+}
+
+const sigCT204 : signature = _ 
+const sigXT204 : signature = _ 
+const sigRT204 : signature = _ 
+
+
+transaction T204 { 
+ input = [ T203@0: sigCT204 sigXT204 sigRT204 ] 
+ output = [ 100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC28, pubkeyX29, pubkeyR30; sC, sX, sR)));
+	100 BTC : fun(sC, sX, sR) . ((versig(pubkeyC31, pubkeyX32, pubkeyR33; sC, sX, sR)));
+	200 BTC : fun(sC, sX, sR) . ((versig(pubkeyC34, pubkeyX35, pubkeyR36; sC, sX, sR))) ] 
+}
+
+const sigCT205 : signature = _ 
+const sigXT205 : signature = _ 
+const sigRT205 : signature = _ 
+
+transaction T205 { 
+ input = [ T204@0:  sigCT205 sigXT205 sigRT205 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyC; x) 
+ 
+}
+
+const sigCT206 : signature = _ 
+const sigXT206 : signature = _ 
+const sigRT206 : signature = _ 
+
+transaction T206 { 
+ input = [ T204@1:  sigCT206 sigXT206 sigRT206 ] 
+ output = 100 BTC : fun(x) . versig(pubkeyR; x) 
+ 
+}
+
+const sigCT207 : signature = _ 
+const sigXT207 : signature = _ 
+const sigRT207 : signature = _ 
+
+transaction T207 { 
+ input = [ T204@2:  sigCT207 sigXT207 sigRT207 ] 
+ output = 200 BTC : fun(x) . versig(pubkeyX; x) 
+ 
+}
+

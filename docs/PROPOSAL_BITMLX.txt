@@ -1,0 +1,101 @@
+PROPOSAL ĐỒ ÁN MÔN BLOCKCHAIN
+Đề tài: Triển khai ứng dụng smart contract cross-chain theo BitMLx/BitML toolchain (UTXO)
+
+1) Thông tin chung
+- Sinh viên: [Họ và tên]
+- MSSV: [MSSV]
+- Lớp: [Lớp]
+- Giảng viên hướng dẫn: [Tên GV] (nếu có)
+- Thời gian thực hiện: [Từ ngày] -> [Đến ngày]
+
+2) Tóm tắt (Abstract)
+Đồ án xây dựng và kiểm thử bộ ứng dụng smart contract cross-chain cho hệ blockchain kiểu Bitcoin (mô hình UTXO), dựa trên tài liệu “BitMLx: Secure Cross-chain Smart Contracts For Bitcoin-style Cryptocurrencies” (arXiv:2501.17733v1, 29/01/2025).
+
+Thay vì thiết kế thủ công các giao thức cross-chain (khó kiểm định, dễ sai), BitMLx đề xuất một ngôn ngữ đặc tả (DSL) cho hợp đồng cross-chain và trình biên dịch chuyển BitMLx thành các hợp đồng BitML trên từng chain (ví dụ Bitcoin và Dogecoin), kèm cơ chế step-secrets/compensation để đảm bảo người dùng trung thực không bị thiệt hại khi đối phương gian lận hoặc không đồng bộ.
+
+Sản phẩm của đồ án là pipeline chạy được bằng code, bám sát BitML toolchain:
+- BitMLx (Haskell/stack) -> sinh BitML (Racket, #lang bitml)
+- BitML compiler -> sinh output .balzac (mô tả tập giao dịch/điều kiện chi tiêu UTXO)
+- Bộ test case (integration tests) rõ ràng cho 4 ứng dụng minh họa.
+
+3) Vấn đề và động cơ (Motivation)
+Trong thực tế có nhiều blockchain/cryptocurrency cùng tồn tại. Nhiều bài toán cần tương tác tài sản trên nhiều chain (quyên góp đa đồng, thanh toán có đổi tiền, vay thế chấp khác chain, swap…). Tuy nhiên, hợp đồng trên các chain khác nhau thực thi độc lập; việc “replicate” hành động giữa chain có thể bị can thiệp bởi scheduler/miner (sắp xếp lại, trì hoãn, chèn giao dịch), dẫn đến rủi ro mất tiền nếu thiết kế sai.
+
+Đồ án hướng tới cách tiếp cận hệ thống hóa: dùng BitMLx để đặc tả cross-chain contract ở mức cao, sau đó biên dịch xuống BitML và sinh artifacts ở mức giao dịch, kèm cơ chế an toàn theo đúng tư tưởng trong paper (priority choice +>, step secrets, compensation).
+
+4) Mục tiêu
+4.1) Mục tiêu kỹ thuật
+- Compile 4 ứng dụng minh họa bằng BitMLx -> BitML (Bitcoin/Dogecoin) -> .balzac.
+- Chuẩn hóa môi trường build/compile bằng Docker (để giảng viên chạy lại dễ dàng, giảm lỗi cài đặt).
+- Viết test case tự động (pytest) kiểm tra build end-to-end và các chỉ tiêu đầu ra.
+
+4.2) Mục tiêu học thuật
+- Trình bày mô hình đe dọa (malicious scheduler), bài toán atomic replication cross-chain.
+- Giải thích cơ chế BitMLx: priority choice (+>), step secrets, compensation phase, collateral.
+- Phân tích chi phí on-chain qua thống kê: số lượng transaction sinh ra và độ sâu thực thi.
+
+5) Phạm vi và giả định
+- Phạm vi: blockchain UTXO/Bitcoin-style (script có signature checks, hash locks, timelocks, predicate cơ bản).
+- Giả định: người dùng trung thực theo dõi chain và gửi giao dịch đúng thời điểm (theo mô hình trong paper).
+- Không triển khai lên mainnet/testnet; tập trung vào pipeline biên dịch + artifacts + kiểm thử.
+
+6) Kiến trúc hệ thống
+A) Lớp đặc tả (BitMLx)
+- Hợp đồng cross-chain được viết theo DSL BitMLx (embedded Haskell).
+
+B) Lớp biên dịch (BitMLx compiler)
+- Biên dịch BitMLx -> 2 hợp đồng BitML tương ứng 2 chain (Bitcoin/Dogecoin) dạng file .rkt (#lang bitml).
+- Sinh step secrets và compensation phase theo từng priority choice.
+
+C) Lớp biên dịch giao dịch (BitML toolchain)
+- Chạy BitML compiler để sinh .balzac (mô tả tập giao dịch và điều kiện chi tiêu UTXO).
+
+D) Lớp tự động hóa & kiểm thử
+- Scripts chạy pipeline.
+- Integration tests xác nhận kết quả compile và thống kê.
+
+7) Tính năng và đặc điểm
+- Priority choice (+>): thể hiện thứ tự ưu tiên thực thi và hỗ trợ thanh khoản (liquidity) theo thiết kế BitMLx.
+- Step secrets: cá nhân hóa “dấu vết hành động” để truy trách nhiệm và làm bằng chứng bồi thường.
+- Compensation phase: cho phép bên trung thực rút bồi thường nếu phát hiện thực thi lệch chain.
+- Bám BitML toolchain: đầu ra đến mức .balzac giúp liên hệ trực tiếp với mô hình UTXO.
+
+8) 4 ứng dụng minh họa
+1) ReceiverChosenDenomination: quyên góp đa đồng, người nhận chọn denomination.
+2) TwoPartyAgreement: quyên góp đa đồng, hai bên đồng thuận thông qua coin-toss (reveal condition).
+3) MultichainPaymentExchange: thanh toán có đổi tiền qua exchange service với tỷ giá cố định.
+4) MultichainLoanMediator: vay cross-chain có mediator giám sát installment.
+
+9) Kế hoạch kiểm thử
+- Compile pipeline chạy thành công end-to-end cho 4 ứng dụng.
+- Kiểm tra artifacts và chỉ số:
+  - Số lượng transaction sinh ra (max transaction id trong .balzac)
+  - Độ sâu thực thi (depth)
+
+10) Tiêu chí đánh giá
+- Đúng chức năng: pipeline chạy được, artifacts đầy đủ.
+- Tái lập: giảng viên chạy được trên máy khác bằng Docker.
+- Kiểm thử: test tự động, rõ ràng.
+- Báo cáo: giải thích rõ kiến trúc, cơ chế an toàn, chi phí tài nguyên.
+
+11) Sản phẩm bàn giao
+- Source code + scripts + Dockerfile.
+- Artifacts 4 ứng dụng (đã gom sẵn trong dist/bitmlx_artifacts).
+- Hướng dẫn chạy + test.
+
+12) Hướng dẫn chạy nhanh (cho giảng viên)
+- Chạy test tự động:
+  make test
+
+- Compile từng ứng dụng:
+  make compile EXAMPLE=ReceiverChosenDenomination
+  make compile EXAMPLE=TwoPartyAgreement
+  make compile EXAMPLE=MultichainPaymentExchange
+  make compile EXAMPLE=MultichainLoanMediator
+
+- Artifacts đã gom sẵn:
+  dist/bitmlx_artifacts/
+
+Tài liệu tham khảo chính
+- BitMLx paper: arXiv:2501.17733v1 (29/01/2025)
+- BitML toolchain: bitml-lang/bitml-compiler

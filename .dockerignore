@@ -1,0 +1,10 @@
+**/.git
+**/.venv
+**/__pycache__
+**/*.pyc
+vendor/**/.stack-work
+vendor/**/.git
+vendor/**/dist-newstyle
+vendor/**/target
+vendor/**/node_modules
+*.balzac

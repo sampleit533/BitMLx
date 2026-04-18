@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# BitMLx pipeline outputs
+vendor/BitMLx/output/*.balzac
+vendor/BitMLx/output/*_depth.txt
+vendor/BitMLx/output/statistics.txt
+
+# Haskell build
+vendor/BitMLx/.stack-work/
+
+# Local caches (if ever created outside docker)
+.stack/
+.local/
