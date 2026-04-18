@@ -18,3 +18,5 @@ vendor/BitMLx/.stack-work/
 .local/
 .env
 drap/
+*.7z
+

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.info.title }} - BitMLx Viewer</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --green: #3fb950;
+            --orange: #d29922;
+            --purple: #bc8cff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .breadcrumb { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+
+        h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        .desc { color: var(--text-muted); margin-bottom: 24px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .stat-box .value { font-size: 2rem; font-weight: 700; }
+        .stat-box .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+        .val-blue { color: var(--accent); }
+        .val-green { color: var(--green); }
+        .val-orange { color: var(--orange); }
+
+        /* Chain details */
+        .chain-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .chain-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            background: #21262d;
+        }
+        .chain-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .chain-dot.bitcoin { background: #f7931a; }
+        .chain-dot.dogecoin { background: #c2a633; }
+        .chain-header h3 { font-size: 1rem; }
+        .chain-meta {
+            display: flex;
+            gap: 20px;
+            padding: 16px 20px;
+            flex-wrap: wrap;
+        }
+        .chain-meta-item { font-size: 0.85rem; }
+        .chain-meta-item .lbl { color: var(--text-muted); }
+
+        /* Participants & Secrets */
+        .detail-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .detail-section h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+        }
+        .tag-list { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+        }
+        .tag.participant { background: rgba(188, 140, 255, 0.15); color: var(--purple); }
+        .tag.secret { background: rgba(210, 153, 34, 0.12); color: var(--orange); font-family: monospace; font-size: 0.75rem; }
+
+        /* File viewer */
+        .file-section { margin-bottom: 20px; }
+        .file-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            background: #21262d;
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .file-header h4 { font-size: 0.9rem; font-family: monospace; }
+        .file-header .toggle { color: var(--text-muted); font-size: 0.85rem; }
+        .file-content {
+            display: none;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            overflow: auto;
+            max-height: 500px;
+        }
+        .file-content.open { display: block; }
+        .file-content pre {
+            margin: 0;
+            padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            white-space: pre;
+            color: var(--text);
+            background: var(--card);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0 24px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Dashboard</a> &gt; {{ data.info.title }}
+        </div>
+
+        <h1>{{ data.info.title }}</h1>
+        <p class="desc">{{ data.info.description }}</p>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            {% if data.stats %}
+            <div class="stat-box">
+                <div class="value val-blue">{{ data.stats.transactions }}</div>
+                <div class="label">Transactions</div>
+            </div>
+            <div class="stat-box">
+                <div class="value val-green">{{ data.stats.depth }}</div>
+                <div class="label">Tree Depth</div>
+            </div>
+            <div class="stat-box">
+                <div class="value val-orange">{{ data.stats.time }}s</div>
+                <div class="label">Compile Time</div>
+            </div>
+            {% endif %}
+            <div class="stat-box">
+                <div class="value val-blue">{{ data.chains | length }}</div>
+                <div class="label">Chains</div>
+            </div>
+            {% set all_participants = [] %}
+            {% for chain, info in data.chains.items() %}
+                {% for p in info.participants %}
+                    {% if p not in all_participants %}
+                        {% if all_participants.append(p) %}{% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            <div class="stat-box">
+                <div class="value" style="color: var(--purple)">{{ all_participants | length }}</div>
+                <div class="label">Participants</div>
+            </div>
+        </div>
+
+        <!-- Chain details -->
+        {% for chain, info in data.chains.items() %}
+        <div class="chain-section">
+            <div class="chain-header">
+                <div class="chain-dot {{ chain }}"></div>
+                <h3>{{ chain | capitalize }}</h3>
+            </div>
+            <div class="chain-meta">
+                <div class="chain-meta-item">
+                    <span class="lbl">BitML (.rkt):</span>
+                    {{ "%.1f" | format(info.rkt_size / 1024) }} KB
+                </div>
+                <div class="chain-meta-item">
+                    <span class="lbl">Balzac (.balzac):</span>
+                    {{ "%.1f" | format(info.balzac_size / 1024) }} KB
+                </div>
+                <div class="chain-meta-item">
+                    <span class="lbl">Max TX index:</span>
+                    {{ info.tx_count }}
+                </div>
+                <div class="chain-meta-item">
+                    <span class="lbl">Participants:</span>
+                    {% for p in info.participants | unique %}
+                    <span style="color: var(--purple)">{{ p }}</span>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Participants -->
+        {% if all_participants %}
+        <div class="detail-section">
+            <h3>Participants</h3>
+            <div class="tag-list">
+                {% for p in all_participants %}
+                <span class="tag participant">{{ p }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Secrets -->
+        {% set all_secrets = [] %}
+        {% for chain, info in data.chains.items() %}
+            {% for s in info.secrets %}
+                {% if s not in all_secrets %}
+                    {% if all_secrets.append(s) %}{% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% if all_secrets %}
+        <div class="detail-section">
+            <h3>Step Secrets ({{ all_secrets | length }})</h3>
+            <div class="tag-list">
+                {% for s in all_secrets %}
+                <span class="tag secret">{{ s }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- File contents -->
+        <h2 style="margin: 32px 0 16px; font-size: 1.2rem;">Artifact Files</h2>
+        {% for fname, content in files.items() %}
+        <div class="file-section">
+            <div class="file-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.toggle').textContent = this.nextElementSibling.classList.contains('open') ? 'collapse' : 'expand'">
+                <h4>{{ fname }}</h4>
+                <span class="toggle">expand</span>
+            </div>
+            <div class="file-content">
+                <pre>{{ content }}</pre>
+            </div>
+        </div>
+        {% endfor %}
+
+        <footer>
+            <a href="/">&#8592; Back to Dashboard</a>
+        </footer>
+    </div>
+</body>
+</html>

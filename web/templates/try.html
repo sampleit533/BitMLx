@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try Contract - BitMLx Viewer</title>
+    <style>
+        :root {
+            --bg: #0d1117; --card: #161b22; --border: #30363d;
+            --text: #e6edf3; --text-muted: #8b949e; --accent: #58a6ff;
+            --green: #3fb950; --orange: #d29922; --red: #f85149; --purple: #bc8cff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .breadcrumb { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+        h1 { font-size: 1.8rem; margin-bottom: 8px; }
+        .subtitle { color: var(--text-muted); margin-bottom: 32px; }
+
+        /* Template selector */
+        .template-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; margin-bottom: 32px; }
+        .template-card {
+            background: var(--card); border: 2px solid var(--border); border-radius: 8px;
+            padding: 16px; cursor: pointer; transition: border-color 0.2s;
+        }
+        .template-card:hover { border-color: var(--accent); }
+        .template-card.selected { border-color: var(--accent); background: rgba(88, 166, 255, 0.08); }
+        .template-card h3 { font-size: 1rem; margin-bottom: 4px; }
+        .template-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Params form */
+        .params-section { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 24px; display: none; }
+        .params-section.visible { display: block; }
+        .params-section h2 { font-size: 1.1rem; margin-bottom: 16px; }
+
+        .participant-row {
+            display: grid; grid-template-columns: 80px 1fr 1fr 1fr; gap: 12px;
+            align-items: center; margin-bottom: 12px; padding: 12px;
+            background: #21262d; border-radius: 6px;
+        }
+        .participant-row .role { font-size: 0.8rem; color: var(--purple); }
+        .field label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
+        .field input {
+            width: 100%; padding: 6px 10px; background: var(--bg); border: 1px solid var(--border);
+            border-radius: 4px; color: var(--text); font-size: 0.9rem;
+        }
+        .field input:focus { outline: none; border-color: var(--accent); }
+
+        /* Compile button */
+        .compile-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 24px; background: #238636; color: #fff; border: none;
+            border-radius: 6px; font-size: 1rem; cursor: pointer; transition: background 0.2s;
+        }
+        .compile-btn:hover { background: #2ea043; }
+        .compile-btn:disabled { background: var(--border); cursor: wait; }
+
+        /* Spinner */
+        .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading .spinner { display: inline-block; }
+
+        /* Result area */
+        .result-section { margin-top: 32px; display: none; }
+        .result-section.visible { display: block; }
+
+        .result-banner {
+            padding: 16px 20px; border-radius: 8px; margin-bottom: 20px; font-weight: 600;
+        }
+        .result-banner.success { background: rgba(63, 185, 80, 0.15); border: 1px solid var(--green); color: var(--green); }
+        .result-banner.error { background: rgba(248, 81, 73, 0.15); border: 1px solid var(--red); color: var(--red); }
+
+        .result-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px; margin-bottom: 24px;
+        }
+        .result-stat {
+            background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+            padding: 16px; text-align: center;
+        }
+        .result-stat .val { font-size: 1.8rem; font-weight: 700; }
+        .result-stat .lbl { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* File viewer */
+        .file-block { margin-bottom: 16px; }
+        .file-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 16px; background: #21262d; border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0; cursor: pointer; user-select: none;
+        }
+        .file-header h4 { font-size: 0.85rem; font-family: monospace; }
+        .file-header .toggle { color: var(--text-muted); font-size: 0.85rem; }
+        .file-body {
+            display: none; border: 1px solid var(--border); border-top: none;
+            border-radius: 0 0 8px 8px; max-height: 400px; overflow: auto;
+        }
+        .file-body.open { display: block; }
+        .file-body pre {
+            margin: 0; padding: 16px;
+            font-family: 'SFMono-Regular', Consolas, monospace;
+            font-size: 0.78rem; line-height: 1.5; white-space: pre; color: var(--text); background: var(--card);
+        }
+
+        .compile-log { margin-bottom: 24px; }
+        .compile-log summary { cursor: pointer; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 8px; }
+        .compile-log pre {
+            background: var(--card); border: 1px solid var(--border); border-radius: 6px;
+            padding: 12px; font-size: 0.75rem; max-height: 300px; overflow: auto;
+            color: var(--text-muted); white-space: pre-wrap;
+        }
+
+        footer { text-align: center; padding: 40px 0 24px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px; }
+        @media (max-width: 600px) {
+            .participant-row { grid-template-columns: 1fr; }
+            .template-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb"><a href="/">Dashboard</a> &gt; Try Contract</div>
+        <h1>Try Contract</h1>
+        <p class="subtitle">Chọn template, tùy chỉnh tham số participant/deposit, rồi compile qua BitMLx pipeline.</p>
+
+        <!-- Step 1: Choose template -->
+        <div class="template-grid" id="templateGrid">
+            {% for key, t in templates.items() %}
+            <div class="template-card" data-template="{{ key }}" onclick="selectTemplate('{{ key }}')">
+                <h3>{{ t.title }}</h3>
+                <p>{{ t.description }}</p>
+                <p style="margin-top: 6px; font-size: 0.8rem; color: var(--accent);">
+                    {{ t.participants | length }} participants
+                    {% if t.has_secrets %} + secrets{% endif %}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Step 2: Params -->
+        <div class="params-section" id="paramsSection">
+            <h2>Parameters</h2>
+            <div id="participantForms"></div>
+            <div style="margin-top: 20px;">
+                <button class="compile-btn" id="compileBtn" onclick="doCompile()">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btnText">Compile</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 3: Results -->
+        <div class="result-section" id="resultSection">
+            <div class="result-banner" id="resultBanner"></div>
+            <div class="result-stats" id="resultStats"></div>
+
+            <details class="compile-log">
+                <summary>Compile log</summary>
+                <pre id="compileLog"></pre>
+            </details>
+
+            <div id="resultFiles"></div>
+        </div>
+
+        <footer><a href="/">&larr; Back to Dashboard</a></footer>
+    </div>
+
+    <script>
+    const TEMPLATES = {{ templates | tojson }};
+    let selectedTemplate = null;
+
+    function selectTemplate(key) {
+        selectedTemplate = key;
+        document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`.template-card[data-template="${key}"]`).classList.add('selected');
+
+        const t = TEMPLATES[key];
+        const section = document.getElementById('paramsSection');
+        section.classList.add('visible');
+
+        const forms = document.getElementById('participantForms');
+        forms.innerHTML = '';
+        t.participants.forEach((p, i) => {
+            const row = document.createElement('div');
+            row.className = 'participant-row';
+            row.innerHTML = `
+                <div>
+                    <div class="role">${p.role}</div>
+                </div>
+                <div class="field">
+                    <label>Name</label>
+                    <input type="text" data-idx="${i}" data-field="name" value="${p.name}" maxlength="20" pattern="[A-Za-z0-9]+">
+                </div>
+                <div class="field">
+                    <label>Deposit BTC</label>
+                    <input type="number" data-idx="${i}" data-field="btc" value="${p.btc}" min="0" max="100000">
+                </div>
+                <div class="field">
+                    <label>Deposit DOGE</label>
+                    <input type="number" data-idx="${i}" data-field="doge" value="${p.doge}" min="0" max="100000">
+                </div>
+            `;
+            forms.appendChild(row);
+        });
+
+        // Hide old results
+        document.getElementById('resultSection').classList.remove('visible');
+    }
+
+    function gatherParams() {
+        const participants = [];
+        const t = TEMPLATES[selectedTemplate];
+        t.participants.forEach((orig, i) => {
+            const name = document.querySelector(`input[data-idx="${i}"][data-field="name"]`).value || orig.name;
+            const btc = parseInt(document.querySelector(`input[data-idx="${i}"][data-field="btc"]`).value) || 0;
+            const doge = parseInt(document.querySelector(`input[data-idx="${i}"][data-field="doge"]`).value) || 0;
+            participants.push({ name, btc, doge });
+        });
+        return { template: selectedTemplate, participants };
+    }
+
+    async function doCompile() {
+        const btn = document.getElementById('compileBtn');
+        const btnText = document.getElementById('btnText');
+        btn.disabled = true;
+        btn.classList.add('loading');
+        btnText.textContent = 'Compiling...';
+
+        const resultSection = document.getElementById('resultSection');
+        resultSection.classList.remove('visible');
+
+        try {
+            const resp = await fetch('/try/compile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(gatherParams()),
+            });
+            const data = await resp.json();
+
+            resultSection.classList.add('visible');
+            const banner = document.getElementById('resultBanner');
+            const statsDiv = document.getElementById('resultStats');
+            const logPre = document.getElementById('compileLog');
+            const filesDiv = document.getElementById('resultFiles');
+
+            if (data.error) {
+                banner.className = 'result-banner error';
+                banner.textContent = 'Error: ' + data.error;
+                statsDiv.innerHTML = '';
+                filesDiv.innerHTML = '';
+                logPre.textContent = data.output || '';
+                return;
+            }
+
+            if (data.success) {
+                banner.className = 'result-banner success';
+                banner.textContent = 'Compile OK';
+            } else {
+                banner.className = 'result-banner error';
+                banner.textContent = 'Compile failed (see log)';
+            }
+
+            logPre.textContent = data.output || '(no output)';
+
+            // Stats
+            let statsHtml = '';
+            if (data.stats) {
+                statsHtml += `<div class="result-stat"><div class="val" style="color:var(--accent)">${data.stats.transactions}</div><div class="lbl">Transactions</div></div>`;
+                statsHtml += `<div class="result-stat"><div class="val" style="color:var(--green)">${data.stats.depth}</div><div class="lbl">Tree Depth</div></div>`;
+                statsHtml += `<div class="result-stat"><div class="val" style="color:var(--orange)">${data.stats.time}s</div><div class="lbl">Compile Time</div></div>`;
+            }
+            if (data.depth !== null && data.depth !== undefined) {
+                statsHtml += `<div class="result-stat"><div class="val" style="color:var(--green)">${data.depth}</div><div class="lbl">Depth (from file)</div></div>`;
+            }
+            statsDiv.innerHTML = statsHtml;
+
+            // Files
+            let filesHtml = '';
+            const allFiles = data.files || {};
+            // Also show hs_source
+            if (data.hs_source) {
+                allFiles['UserCustom.hs (generated)'] = data.hs_source;
+            }
+            for (const [fname, content] of Object.entries(allFiles)) {
+                filesHtml += `
+                <div class="file-block">
+                    <div class="file-header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.toggle').textContent = this.nextElementSibling.classList.contains('open') ? 'collapse' : 'expand'">
+                        <h4>${fname}</h4>
+                        <span class="toggle">expand</span>
+                    </div>
+                    <div class="file-body">
+                        <pre>${escapeHtml(content)}</pre>
+                    </div>
+                </div>`;
+            }
+            filesDiv.innerHTML = filesHtml;
+
+        } catch (e) {
+            const banner = document.getElementById('resultBanner');
+            banner.className = 'result-banner error';
+            banner.textContent = 'Request failed: ' + e.message;
+            resultSection.classList.add('visible');
+        } finally {
+            btn.disabled = false;
+            btn.classList.remove('loading');
+            btnText.textContent = 'Compile';
+        }
+    }
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+    </script>
+</body>
+</html>
