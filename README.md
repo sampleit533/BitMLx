@@ -1,7 +1,5 @@
 # Blockchain project (BitMLx + BitML toolchain)
 
-Repo này bám theo `bitmlx.pdf` và chạy được pipeline:
-
 1. Biên dịch BitMLx (Haskell) ra BitML (Racket, `#lang bitml`) cho Bitcoin/Dogecoin.
 2. Replace hash placeholders.
 3. Chạy BitML compiler để xuất `.balzac`.
@@ -44,3 +42,8 @@ Các test tập trung vào 4 ứng dụng chính trong paper:
 - `MultichainPaymentExchange` (Exchange service)
 - `MultichainLoanMediator` (Loan + mediator)
 
+## Web app
+
+```bash
+python web/app.py
+```
