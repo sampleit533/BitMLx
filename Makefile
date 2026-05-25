@@ -1,9 +1,10 @@
 IMAGE ?= blockchain-bitmlx:dev
+DOCKER_BUILD_NETWORK ?= host
 
 .PHONY: docker-build bootstrap compile compile-all test clean
 
 docker-build:
-	docker build -t $(IMAGE) -f docker/Dockerfile .
+	docker build --network=$(DOCKER_BUILD_NETWORK) -t $(IMAGE) -f docker/Dockerfile .
 
 bootstrap: docker-build
 	IMAGE=$(IMAGE) ./scripts/docker_run.sh ./scripts/bootstrap.sh

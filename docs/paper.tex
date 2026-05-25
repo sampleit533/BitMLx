@@ -34,7 +34,7 @@ Source repository: \url{https://github.com/sampleit533/BitMLx/}
 \maketitle
 
 \begin{abstract}
-Cross-chain smart contracts that simultaneously govern assets on multiple UTXO-based blockchains present significant security and engineering challenges. Existing approaches, such as hash time-locked contracts, address only simple atomic swaps and do not provide a general implementation framework for multi-party protocols with formally specified branching behavior. This report presents the design, implementation, and evaluation of a BitMLx-based toolchain that compiles a single high-level cross-chain contract specification into paired BitML contracts for Bitcoin and Dogecoin, and then into UTXO-level Balzac transaction artifacts. The repository integrates a Haskell BitMLx compiler, the Racket BitML compiler, Docker-based reproducible execution scripts, a pytest integration test suite, pre-built artifacts, and a Flask web interface for inspecting and experimenting with contracts. We analyze the compiler architecture directly from the source code, emphasizing priority choice compilation, step-secret generation, stipulation/refund wrapping, collateral accounting, and well-formedness checks. The system is evaluated on four representative applications: ReceiverChosenDenomination, TwoPartyAgreement, MultichainPaymentExchange, and MultichainLoanMediator. The generated artifacts contain 51, 51, 207, and 4,098 transactions per chain, with execution-tree depths of 6, 6, 9, and 27, respectively. The Bitcoin and Dogecoin outputs are structurally symmetric in all evaluated cases, while the randomized hash-replacement step intentionally changes concrete hash literals between runs. These results demonstrate the feasibility of an end-to-end BitMLx toolchain and highlight the principal trade-off of the approach: formal cross-chain expressiveness is obtained at the cost of substantial transaction expansion for deeply nested protocols.
+Cross-chain smart contracts that simultaneously govern assets on multiple UTXO-based blockchains present significant security and engineering challenges. Existing approaches, such as hash time-locked contracts, address only simple atomic swaps and do not provide a general implementation framework for multi-party protocols with formally specified branching behavior. This report presents the design, implementation, and evaluation of a BitMLx-based toolchain that compiles a single high-level cross-chain contract specification into paired BitML contracts for Bitcoin and Dogecoin, and then into UTXO-level Balzac transaction artifacts. The repository integrates a Haskell BitMLx compiler, the Racket BitML compiler, Docker-based reproducible execution scripts, a pytest integration test suite, pre-built artifacts, and a Flask web interface for inspecting and experimenting with contracts. We redeployed the system on the evaluation machine, rebuilt the Docker image with host networking, reran the integration tests, and validated the web interface including a live template compilation request. We analyze the compiler architecture directly from the source code, emphasizing priority choice compilation, step-secret generation, stipulation/refund wrapping, collateral accounting, and well-formedness checks. The system is evaluated on four representative applications: ReceiverChosenDenomination, TwoPartyAgreement, MultichainPaymentExchange, and MultichainLoanMediator. The generated artifacts contain 51, 51, 207, and 4,098 transactions per chain, with execution-tree depths of 6, 6, 9, and 27, respectively. The Bitcoin and Dogecoin outputs are structurally symmetric in all evaluated cases, while the randomized hash-replacement step intentionally changes concrete hash literals between runs. These results demonstrate the feasibility of an end-to-end BitMLx toolchain and highlight the principal trade-off of the approach: formal cross-chain expressiveness is obtained at the cost of substantial transaction expansion for deeply nested protocols.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -211,6 +211,36 @@ The toolchain comprises four layers: the BitMLx compiler, the compilation pipeli
 \label{fig:architecture}
 \end{figure}
 
+
+\subsection{Technology Stack and Runtime Environment}
+
+The implementation combines several technologies, each selected for a specific layer of the system rather than for incidental convenience. Table~\ref{tab:techstack} summarizes the stack observed during the redeployment on the evaluation machine.
+
+\begin{table}[t]
+\caption{Technology stack validated during local redeployment.}
+\label{tab:techstack}
+\centering
+\footnotesize
+\begin{tabular}{p{0.22\linewidth}p{0.31\linewidth}p{0.37\linewidth}}
+\toprule
+Layer & Technology & Role in the system \\
+\midrule
+Container runtime & Docker 29.4.2 & Reproducible Linux execution boundary \\
+Base OS & Debian Bookworm & Package source for Racket, Python, LLVM, C toolchain \\
+Haskell build & Stack 2.15.7, GHC 8.10.7 & Build and run the BitMLx compiler \\
+BitML backend & Racket 8.7 & Execute \texttt{\#lang bitml} contracts \\
+Auxiliary scripts & Python 3.11.2 & Hash replacement, statistics, pytest pipeline \\
+Testing & pytest 9.0.3 & End-to-end regression tests \\
+Web interface & Flask 3.1.3, Werkzeug 3.1.8 & Artifact dashboard and Try Contract API \\
+Orchestration & Make 4.3, Bash & Local commands and Docker entry points \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The Haskell/Racket split is important architecturally. Haskell hosts the embedded BitMLx DSL and the source-to-source compiler that maps cross-chain abstractions to two single-chain BitML advertisements. Racket is then used as the execution environment for the existing BitML compiler, which expands the generated \texttt{.rkt} programs into Balzac transaction artifacts. Python does not participate in the core semantics; instead, it provides operational glue: replacing placeholder hashes, parsing statistics, driving pytest assertions, and serving Flask endpoints.
+
+During redeployment, the default Docker bridge network was unavailable on the host. To make the toolchain executable on this machine without changing its semantic behavior, the Makefile and Docker wrapper now support host-network execution. The Docker image is built with \texttt{docker build --network=host}, and \texttt{scripts/docker\_run.sh} automatically falls back to \texttt{--network=host} when Docker's default \texttt{bridge} network is missing. This change affects only container connectivity; the compiler inputs, outputs, and test assertions remain unchanged.
+
 \subsection{BitMLx Compiler}
 
 The BitMLx compiler is implemented in Haskell and organized into several modules with distinct responsibilities.
@@ -322,7 +352,7 @@ The most complex application models a cross-chain loan with a mediator overseein
 
 \subsection{Experimental Setup}
 
-All reported artifact metrics were collected from the current repository state under \texttt{dist/bitmlx\_artifacts}. The reproducible execution environment is defined by \texttt{docker/Dockerfile}, which uses Debian Bookworm, Stack 2.15.7, Racket, Python 3, and cached Docker volumes for Stack and Python dependencies. Each application can be rebuilt independently with the pipeline described in Algorithm~\ref{alg:pipeline}. The ``timeout'' metric reported by the auxiliary statistics script is the largest \texttt{after} value found in the generated BitML/Racket contract; it is a protocol time horizon, not a wall-clock compilation time.
+All reported artifact metrics were collected from the current repository state under \texttt{dist/bitmlx\_artifacts} and then cross-checked by redeploying the pipeline locally. The reproducible execution environment is defined by \texttt{docker/Dockerfile}, which uses Debian Bookworm, Stack 2.15.7, Racket, Python 3, and cached Docker volumes for Stack and Python dependencies. On the evaluation machine, the Docker image \texttt{blockchain-bitmlx:dev} was rebuilt successfully with host networking, the bootstrap step installed the BitML Racket package and built the Haskell executable, and \texttt{make test} completed all four pytest cases. Each application can be rebuilt independently with the pipeline described in Algorithm~\ref{alg:pipeline}. The ``timeout'' metric reported by the auxiliary statistics script is the largest \texttt{after} value found in the generated BitML/Racket contract; it is a protocol time horizon, not a wall-clock compilation time.
 
 \subsection{Compilation Results}
 
@@ -421,7 +451,7 @@ All four applications pass the integration test suite, which verifies:
 \item Depth matching: 6, 6, 9, and 27 respectively
 \end{itemize}
 
-The test suite is intentionally metric-based: it checks exact transaction counts and depths, which remain stable even though the final hash literals are randomized by \texttt{replace\_hash.py}. This makes the tests robust to intended cryptographic placeholder replacement while still detecting structural regressions.
+The test suite is intentionally metric-based: it checks exact transaction counts and depths, which remain stable even though the final hash literals are randomized by \texttt{replace\_hash.py}. This makes the tests robust to intended cryptographic placeholder replacement while still detecting structural regressions. In the local redeployment, \texttt{make test} rebuilt the Docker image, executed \texttt{scripts/bootstrap.sh}, and reported \texttt{4 passed} in $68.48$ seconds, with an end-to-end command elapsed time of $1$ minute $18.91$ seconds.
 
 \subsection{Step Secret Generation Analysis}
 
@@ -458,6 +488,8 @@ The web-based contract editor exposes five templates: SimpleExchange, ReceiverCh
 
 Several safeguards are implemented. Participant names are restricted to alphanumeric characters and truncated to $20$ characters before insertion into generated Haskell source. Artifact file reads are constrained with \texttt{Path.resolve().is\_relative\_to(...)} to prevent path traversal. Temporary source changes are restored in a \texttt{finally} block after compilation, reducing the risk that a failed web request leaves \texttt{Main.hs} permanently modified. Invalid financial configurations are delegated to the BitMLx well-formedness checker, which can reject cases such as missing deposits, inconsistent withdrawals, or uncommitted secrets.
 
+The redeployed web server was launched on \texttt{127.0.0.1:5002}. The dashboard, application-detail page, and Try Contract page all returned HTTP 200 responses. A live POST request to \texttt{/try/compile} using the SimpleExchange template with participants Alice and Bob completed successfully in $3.28$ seconds, generated the temporary \texttt{UserCustom} artifacts, and reported $31$ transactions, depth $4$, and timeout horizon $31$. This validates not only static artifact browsing but also the dynamic path from Flask input handling to Dockerized BitMLx compilation and Racket/Balzac generation.
+
 This editor is therefore best understood as a safe, template-driven exploration interface rather than a full BitMLx visual programming environment. It lowers the barrier for non-Haskell users to inspect contract variations, while preserving the original compiler as the authoritative validator of semantic correctness.
 
 \subsection{Metric Reproducibility and Hash Randomization}
@@ -488,7 +520,7 @@ The empirical verification of cross-chain structural symmetry, with small relati
 
 \subsection{Toolchain Reproducibility}
 
-The Docker-based containerization ensures complete reproducibility of the compilation environment. All dependencies, including specific versions of GHC, Stack, Racket, and Python packages, are pinned in the Dockerfile. The Makefile provides simple entry points for common operations, lowering the barrier to replication.
+The Docker-based containerization ensures complete reproducibility of the compilation environment. All dependencies, including Stack, Racket, Python, LLVM, and C build tools, are installed in the Docker image, while named Docker volumes cache the Stack toolchain and Python virtual environment between runs. The Makefile provides simple entry points for common operations, lowering the barrier to replication. The redeployment also exposed a practical systems issue: some laboratory Docker installations may not provide the default bridge network. The updated wrapper detects this condition and uses host networking so that the scientific result remains reproducible on the available machine.
 
 \subsection{Limitations}
 
