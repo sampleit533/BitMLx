@@ -7,10 +7,22 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows,positioning,fit,calc}
 \usepackage{listings}
 \usepackage{url}
+
+% Left-ragged auto-width column for tabularx (prevents right-margin overflow
+% in the narrow IEEEtran columns while avoiding over-stretched justification).
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+% Let TeX absorb the last few points of long unbreakable code tokens in body
+% text instead of pushing them into the right margin.
+\setlength{\emergencystretch}{3em}
+% Allow long \url / \path strings to break at most punctuation.
+\Urlmuskip=0mu plus 1mu\relax
 
 \lstset{
   basicstyle=\ttfamily\footnotesize,
@@ -89,6 +101,7 @@ To the best of our knowledge, no prior work has reported a complete implementati
 \label{tab:comparison}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{lccccc}
 \toprule
 Approach & \begin{tabular}[c]{@{}c@{}}Multi-\\party\end{tabular} & \begin{tabular}[c]{@{}c@{}}Formal\\guarantees\end{tabular} & \begin{tabular}[c]{@{}c@{}}UTXO\\support\end{tabular} & \begin{tabular}[c]{@{}c@{}}Complex\\logic\end{tabular} & \begin{tabular}[c]{@{}c@{}}Tool-\\chain\end{tabular} \\
@@ -161,7 +174,8 @@ where $\mathit{CA}^B$ targets Bitcoin and $\mathit{CA}^D$ targets Dogecoin. The 
 \label{tab:notation}
 \centering
 \footnotesize
-\begin{tabular}{cl}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{c>{\RaggedRight\arraybackslash}p{0.72\columnwidth}}
 \toprule
 Symbol & Description \\
 \midrule
@@ -235,7 +249,8 @@ The implementation combines several technologies, each selected for a specific l
 \label{tab:techstack}
 \centering
 \footnotesize
-\begin{tabular}{p{0.22\linewidth}p{0.31\linewidth}p{0.37\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\columnwidth}{@{}>{\RaggedRight\arraybackslash}p{0.22\columnwidth} L L@{}}
 \toprule
 Layer & Technology & Role in the system \\
 \midrule
@@ -248,7 +263,7 @@ Testing & pytest 9.0.3 & End-to-end regression tests \\
 Web interface & Flask 3.1.3, Werkzeug 3.1.8 & Artifact dashboard and Try Contract API \\
 Orchestration & Make 4.3, Bash & Local commands and Docker entry points \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 The Haskell/Racket split is important architecturally. Haskell hosts the embedded BitMLx DSL and the source-to-source compiler that maps cross-chain abstractions to two single-chain BitML advertisements. Racket is then used as the execution environment for the existing BitML compiler, which expands the generated \texttt{.rkt} programs into Balzac transaction artifacts. Python does not participate in the core semantics; instead, it provides operational glue: replacing placeholder hashes, parsing statistics, driving pytest assertions, and serving Flask endpoints.
@@ -276,7 +291,8 @@ Table~\ref{tab:modules} summarizes the source-code modules most relevant to the 
 \label{tab:modules}
 \centering
 \footnotesize
-\begin{tabular}{p{0.48\linewidth}p{0.46\linewidth}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\columnwidth}{@{}>{\RaggedRight\arraybackslash}p{0.50\columnwidth} L@{}}
 \toprule
 Path & Responsibility \\
 \midrule
@@ -291,7 +307,7 @@ Path & Responsibility \\
 \path{scripts/bitmlx_pipeline.sh} & End-to-end Racket/Balzac pipeline \\
 \path{web/app.py} & Flask artifact viewer and Try Contract backend \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table}
 
 The most important implementation detail is that the compiler does not merely translate syntax node by node. Before translating the user contract, \texttt{makeStipulationContract} wraps it in a priority choice between contract start and refund. This ensures that if the paired contracts are not published consistently on both chains, honest participants can fall back to refunds rather than entering a partially initialized cross-chain execution. During guarded steps, \texttt{syncStepWrapper} adds a reveal-any condition over participant step secrets; revealing such a secret proves that a participant attempted the corresponding branch. If the branch is executed on one chain but skipped on the other, \texttt{compilePriorityChoice} constructs punishment branches that redistribute the misbehaving participant's collateral to honest participants.
@@ -393,21 +409,22 @@ All reported artifact metrics were collected from the current repository state u
 
 \subsection{Compilation Results}
 
-Table~\ref{tab:results} presents the compilation results for all four applications.
+Table~\ref{tab:results} presents the compilation results for all four applications. Throughout the evaluation tables and figures we abbreviate the applications as RCD (ReceiverChosenDenomination), TPA (TwoPartyAgreement), MPE (MultichainPaymentExchange), and MLM (MultichainLoanMediator).
 
 \begin{table}[t]
-\caption{Compilation results for the four cross-chain applications.}
+\caption{Compilation results for the four cross-chain applications. Codes: RCD, TPA, MPE, MLM (see text).}
 \label{tab:results}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lccccc}
 \toprule
 Application & Part. & Secrets & Trans. & Depth & Timeout \\
 \midrule
-ReceiverChosenDenom. & 2 & 8 & 51 & 6 & 51 \\
-TwoPartyAgreement & 2 & 10 & 51 & 6 & 51 \\
-MultichainPayExch. & 3 & 12 & 207 & 9 & 51 \\
-MultichainLoanMed. & 3 & 18 & 4098 & 27 & 61 \\
+RCD & 2 & 8 & 51 & 6 & 51 \\
+TPA & 2 & 10 & 51 & 6 & 51 \\
+MPE & 3 & 12 & 207 & 9 & 51 \\
+MLM & 3 & 18 & 4098 & 27 & 61 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -427,6 +444,7 @@ Table~\ref{tab:artifacts} reports the artifact file sizes.
 \label{tab:artifacts}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrrrr}
 \toprule
 Application & \begin{tabular}[c]{@{}r@{}}BTC\\(.rkt)\end{tabular} & \begin{tabular}[c]{@{}r@{}}DOGE\\(.rkt)\end{tabular} & \begin{tabular}[c]{@{}r@{}}BTC\\(.balzac)\end{tabular} & \begin{tabular}[c]{@{}r@{}}DOGE\\(.balzac)\end{tabular} \\
@@ -489,14 +507,15 @@ In addition to structural metrics, we measured the end-to-end wall-clock time of
 \label{tab:compile-time}
 \centering
 \footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{lrr@{$\;\pm\;$}l}
 \toprule
-Application & Transactions per chain & \multicolumn{2}{c}{Wall-clock time (s)} \\
+Application & \begin{tabular}[b]{@{}r@{}}Trans.\\per chain\end{tabular} & \multicolumn{2}{c}{Wall-clock time (s)} \\
 \midrule
-ReceiverChosenDenom. & 51 & 3.086 & 0.156 \\
-TwoPartyAgreement & 51 & 3.867 & 1.860 \\
-MultichainPayExch. & 207 & 6.181 & 1.569 \\
-MultichainLoanMed. & 4{,}098 & 107.461 & 3.447 \\
+RCD & 51 & 3.086 & 0.156 \\
+TPA & 51 & 3.867 & 1.860 \\
+MPE & 207 & 6.181 & 1.569 \\
+MLM & 4{,}098 & 107.461 & 3.447 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -506,8 +525,9 @@ MultichainLoanMed. & 4{,}098 & 107.461 & 3.447 \\
 \begin{tikzpicture}[scale=0.78]
 % Log-log line chart: x = 0.6 + 1.2*(log10(tx)-1), y = 1.2*log10(sec)
 % Means over 5 runs: (51, 3.086), (51, 3.867), (207, 6.181), (4098, 107.461)
-\draw[->] (0,0) -- (5.6,0) node[right, font=\scriptsize] {Transactions per chain (log scale)};
-\draw[->] (0,0) -- (0,4.8) node[above, font=\scriptsize] {Wall-clock time (s, log scale)};
+\draw[->] (0,0) -- (5.6,0);
+\node[font=\scriptsize] at (2.6,-0.75) {Transactions per chain (log scale)};
+\draw[->] (0,0) -- (0,4.8) node[above, font=\scriptsize] {Wall-clock time (s)};
 \foreach \x/\val in {0.6/10, 1.8/100, 3.0/1000, 4.2/10000} {
     \draw[gray!40] (\x,0) -- (\x,4.5);
     \node[font=\tiny, below] at (\x,-0.05) {\val};
