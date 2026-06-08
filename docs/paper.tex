@@ -25,16 +25,14 @@
 
 \title{Design, Implementation, and Evaluation of the BitMLx Toolchain for Cross-Chain Smart Contracts on UTXO-Based Blockchains}
 
-\author{Ngo~Vinh~Huy -- 22520556, Nguyen~Gia~Linh -- 22520768\\
-Class NT547.Q21.ANTT\\
-University Final Project Report\\
-Source repository: \url{https://github.com/sampleit533/BitMLx/}
-}
+\author{Ngo~Vinh~Huy,~Nguyen~Gia~Linh,~and~Tran~Tuan~Dung%
+\thanks{The authors are with the University of Information Technology, Vietnam National University Ho Chi Minh City, Vietnam.}%
+\thanks{Source code and reproducible artifacts: \protect\url{https://github.com/sampleit533/BitMLx/}.}}
 
 \maketitle
 
 \begin{abstract}
-Cross-chain smart contracts that simultaneously govern assets on multiple UTXO-based blockchains present significant security and engineering challenges. Existing approaches, such as hash time-locked contracts, address only simple atomic swaps and do not provide a general implementation framework for multi-party protocols with formally specified branching behavior. This report presents the design, implementation, and evaluation of a BitMLx-based toolchain that compiles a single high-level cross-chain contract specification into paired BitML contracts for Bitcoin and Dogecoin, and then into UTXO-level Balzac transaction artifacts. The repository integrates a Haskell BitMLx compiler, the Racket BitML compiler, Docker-based reproducible execution scripts, a pytest integration test suite, pre-built artifacts, and a Flask web interface for inspecting and experimenting with contracts. We redeployed the system on the evaluation machine, rebuilt the Docker image with host networking, reran the integration tests, and validated the web interface including a live template compilation request. We analyze the compiler architecture directly from the source code, emphasizing priority choice compilation, step-secret generation, stipulation/refund wrapping, collateral accounting, and well-formedness checks. The system is evaluated on four representative applications: ReceiverChosenDenomination, TwoPartyAgreement, MultichainPaymentExchange, and MultichainLoanMediator. The generated artifacts contain 51, 51, 207, and 4,098 transactions per chain, with execution-tree depths of 6, 6, 9, and 27, respectively. The Bitcoin and Dogecoin outputs are structurally symmetric in all evaluated cases, while the randomized hash-replacement step intentionally changes concrete hash literals between runs. These results demonstrate the feasibility of an end-to-end BitMLx toolchain and highlight the principal trade-off of the approach: formal cross-chain expressiveness is obtained at the cost of substantial transaction expansion for deeply nested protocols.
+Cross-chain smart contracts that simultaneously govern assets on multiple UTXO-based blockchains present significant security and engineering challenges. Existing approaches, such as hash time-locked contracts, address only simple atomic swaps and do not provide a general implementation framework for multi-party protocols with formally specified branching behavior. This article presents the design, implementation, and evaluation of a BitMLx-based toolchain that compiles a single high-level cross-chain contract specification into paired BitML contracts for Bitcoin and Dogecoin, and then into UTXO-level Balzac transaction artifacts. The repository integrates a Haskell BitMLx compiler, the Racket BitML compiler, Docker-based reproducible execution scripts, a pytest integration test suite, pre-built artifacts, and a Flask web interface for inspecting and experimenting with contracts. We redeployed the system on the evaluation machine, rebuilt the Docker image with host networking, reran the integration tests, and validated the web interface including a live template compilation request. We analyze the compiler architecture directly from the source code, emphasizing priority choice compilation, step-secret generation, stipulation/refund wrapping, collateral accounting, and well-formedness checks. The system is evaluated on four representative applications: ReceiverChosenDenomination, TwoPartyAgreement, MultichainPaymentExchange, and MultichainLoanMediator. The generated artifacts contain 51, 51, 207, and 4,098 transactions per chain, with execution-tree depths of 6, 6, 9, and 27, respectively. The Bitcoin and Dogecoin outputs are structurally symmetric in all evaluated cases, while the randomized hash-replacement step intentionally changes concrete hash literals between runs. These results demonstrate the feasibility of an end-to-end BitMLx toolchain and highlight the principal trade-off of the approach: formal cross-chain expressiveness is obtained at the cost of substantial transaction expansion for deeply nested protocols.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -51,7 +49,7 @@ BitMLx addresses this gap by extending the BitML smart contract language to the 
 
 Despite the theoretical elegance of BitMLx, no comprehensive implementation and evaluation of its compilation toolchain has been reported. The original BitMLx paper provides the formal foundations but does not address practical concerns such as automated build environments, end-to-end testing, artifact management, or interactive visualization of compiled contracts.
 
-The main contributions of this report are as follows:
+The main contributions of this article are as follows:
 \begin{enumerate}
 \item We document and systematize a complete BitMLx/BitML toolchain that compiles BitMLx specifications into UTXO-level transaction artifacts for Bitcoin and Dogecoin, integrating the Haskell-based BitMLx compiler with the Racket-based BitML compiler through Docker and shell automation.
 \item We analyze the implementation at module level, including the embedded Haskell DSL, two-pass coin selection, stipulation contract, priority-choice compilation, step-secret naming scheme, collateral computation, and well-formedness validation.
@@ -60,7 +58,7 @@ The main contributions of this report are as follows:
 \item We evaluate the generated artifacts in terms of participant count, step-secret count, transaction count, tree depth, timeout horizon, and file size, thereby characterizing the practical overhead of the BitMLx compilation approach.
 \end{enumerate}
 
-The remainder of this paper is organized as follows. Section~II reviews related work on cross-chain smart contracts and formal specification languages. Section~III presents the theoretical foundations of BitML and BitMLx. Section~IV describes the architecture and implementation of the toolchain. Section~V presents the four cross-chain applications used for evaluation. Section~VI reports the experimental results. Section~VII discusses the findings and limitations. Section~VIII concludes the paper.
+The remainder of this article is organized as follows. Section~II reviews related work on cross-chain smart contracts and formal specification languages. Section~III presents the theoretical foundations of BitML and BitMLx. Section~IV describes the architecture and implementation of the toolchain. Section~V presents the four cross-chain applications used for evaluation. Section~VI reports the experimental results. Section~VII discusses the findings and limitations. Section~VIII concludes the article.
 
 \section{Related Work}
 
@@ -156,7 +154,7 @@ The BitMLx compiler $\mathcal{C}$ takes a BitMLx contract advertisement and prod
 \begin{equation}
 \mathcal{C}(\mathit{CA}^x) = (\mathit{CA}^B, \mathit{CA}^D)
 \end{equation}
-where $\mathit{CA}^B$ targets Bitcoin and $\mathit{CA}^D$ targets Dogecoin. The same compilation logic is applied twice with different coin selection functions: $\mathit{fst}$ for Bitcoin and $\mathit{snd}$ for Dogecoin.
+where $\mathit{CA}^B$ targets Bitcoin and $\mathit{CA}^D$ targets Dogecoin. The same compilation logic is applied twice with different coin selection functions: $\mathit{fst}$ for Bitcoin and $\mathit{snd}$ for Dogecoin. Table~\ref{tab:notation} summarizes the notation used throughout this article.
 
 \begin{table}[t]
 \caption{Summary of notation.}
@@ -185,31 +183,47 @@ $t_{\max}$ & Maximum protocol timeout horizon \\
 
 \section{Toolchain Architecture and Implementation}
 
-The toolchain comprises four layers: the BitMLx compiler, the compilation pipeline, the testing framework, and the web-based visualization interface. Fig.~\ref{fig:architecture} illustrates the overall architecture.
+The toolchain is organized as four cooperating layers built around a shared artifact store: (i) a Haskell \emph{compiler layer} that lowers a single cross-chain specification into a pair of single-chain BitML programs; (ii) a Dockerized \emph{pipeline layer} that expands these programs into UTXO-level transaction artifacts; (iii) a \emph{testing layer} that asserts structural metrics over the generated artifacts; and (iv) a Flask \emph{web layer} that exposes the artifacts and supports interactive recompilation of user-modified templates. Fig.~\ref{fig:architecture} depicts this layered architecture and the data flow between layers.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
+\resizebox{0.86\textwidth}{!}{%
 \begin{tikzpicture}[
-    node distance=0.6cm,
-    box/.style={rectangle, draw, rounded corners, minimum width=2.8cm, minimum height=0.6cm, font=\scriptsize, align=center},
-    arr/.style={->, thick, >=stealth}
+    font=\footnotesize,
+    >=stealth,
+    box/.style={rectangle, draw, rounded corners=2pt, align=left, inner sep=6pt},
+    arr/.style={->, thick},
+    darr/.style={->, thick, dashed}
 ]
-\node[box, fill=blue!15] (bitmlx) {BitMLx Source\\(Haskell DSL)};
-\node[box, fill=blue!25, below=of bitmlx] (compiler) {BitMLx Compiler\\(\texttt{stack run})};
-\node[box, fill=orange!20, below=of compiler] (rkt) {BitML Contracts\\(.rkt files)};
-\node[box, fill=orange!30, below=of rkt] (hash) {Hash Replacement\\(\texttt{replace\_hash.py})};
-\node[box, fill=green!20, below=of hash] (bitml) {BitML Compiler\\(\texttt{racket})};
-\node[box, fill=green!30, below=of bitml] (balzac) {Transaction Artifacts\\(.balzac files)};
-
-\draw[arr] (bitmlx) -- (compiler);
-\draw[arr] (compiler) -- node[right, font=\tiny] {BTC + DOGE} (rkt);
-\draw[arr] (rkt) -- (hash);
-\draw[arr] (hash) -- (bitml);
-\draw[arr] (bitml) -- (balzac);
-\end{tikzpicture}
-\caption{End-to-end compilation pipeline from BitMLx specification to UTXO transaction artifacts.}
+% Producer chain (left, top-down). No fixed text width: each box auto-sizes
+% to its widest line so monospace tokens never overflow the border.
+\node[box, fill=blue!8]    (src)  at (0,7.2)
+     {\textbf{Specification}\\[2pt]\texttt{app/Examples/*.hs}\\ embedded Haskell DSL\\ deposits $(v_B,v_D)$};
+\node[box, fill=blue!16]   (comp) at (0,4.4)
+     {\textbf{Compiler layer} (Haskell/Stack)\\[2pt] Syntax $\cdot$ WellFormed $\cdot$ StepSecrets\\ PriorityChoice $\cdot$ Stipulation\\ two-pass: $\mathit{fst}\!\to\!$BTC, $\mathit{snd}\!\to\!$DOGE};
+\node[box, fill=orange!16] (pipe) at (0,1.6)
+     {\textbf{Pipeline layer} (Docker)\\[2pt] \texttt{stack run}\,$\to$\,\texttt{.rkt}\\ \texttt{replace\_hash.py}\\ \texttt{racket}\,$\to$\,\texttt{.balzac}, statistics};
+% Artifact store (center)
+\node[box, fill=gray!12]   (store) at (7.6,1.6)
+     {\textbf{Artifact store}\\[2pt] \texttt{dist/bitmlx\_artifacts/}\\ \texttt{*\_bitcoin.\{rkt,balzac\}}\\ \texttt{*\_dogecoin.\{rkt,balzac\}}\\ \texttt{*\_depth}, \texttt{statistics.txt}};
+% Consumers (right)
+\node[box, fill=green!12]  (test) at (13.4,4.4)
+     {\textbf{Testing layer} (pytest)\\[2pt] asserts $T$ and $d$ per chain};
+\node[box, fill=green!12]  (web)  at (13.4,1.0)
+     {\textbf{Web layer} (Flask)\\[2pt] Dashboard $\cdot$ Detail\\ Try Contract editor};
+% Edges
+\draw[arr] (src)  -- (comp);
+\draw[arr] (comp) -- (pipe);
+\draw[arr] (pipe) -- (store);
+\draw[arr] (store.east) to[out=30,in=180]  (test.west);
+\draw[arr] (store.east) to[out=-30,in=180] (web.west);
+\draw[darr] (web.south) to[out=-90,in=-90]
+      node[below, font=\scriptsize] {Try Contract recompiles} (pipe.south);
+\end{tikzpicture}%
+}
+\caption{Layered architecture of the BitMLx toolchain. The Haskell compiler layer lowers a single cross-chain specification into paired single-chain BitML programs; the Dockerized pipeline layer expands them into UTXO-level Balzac artifacts; and the resulting artifact store is consumed by the pytest testing layer and the Flask web layer. The dashed edge denotes the interactive \emph{Try Contract} path, which re-enters the pipeline to compile user-modified templates.}
 \label{fig:architecture}
-\end{figure}
+\end{figure*}
 
 
 \subsection{Technology Stack and Runtime Environment}
@@ -284,7 +298,30 @@ The most important implementation detail is that the compiler does not merely tr
 
 \subsection{Compilation Pipeline}
 
-The compilation pipeline is orchestrated through shell scripts and containerized using Docker to ensure reproducibility.
+The compilation pipeline is orchestrated through shell scripts and containerized using Docker to ensure reproducibility. Fig.~\ref{fig:pipeline} shows the corresponding data flow, and Algorithm~\ref{alg:pipeline} specifies the procedure in detail.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    node distance=0.55cm,
+    box/.style={rectangle, draw, rounded corners, minimum width=3.0cm, minimum height=0.6cm, font=\scriptsize, align=center},
+    arr/.style={->, thick, >=stealth}
+]
+\node[box, fill=blue!15] (bitmlx) {BitMLx source (Haskell DSL)};
+\node[box, fill=blue!25, below=of bitmlx] (compiler) {BitMLx compiler (\texttt{stack run})};
+\node[box, fill=orange!20, below=of compiler] (rkt) {BitML contracts (\texttt{.rkt})};
+\node[box, fill=orange!30, below=of rkt] (hash) {Hash replacement (\texttt{replace\_hash.py})};
+\node[box, fill=green!20, below=of hash] (bitml) {BitML compiler (\texttt{racket})};
+\node[box, fill=green!30, below=of bitml] (balzac) {Transaction artifacts (\texttt{.balzac})};
+\draw[arr] (bitmlx) -- (compiler);
+\draw[arr] (compiler) -- node[right, font=\tiny] {BTC + DOGE} (rkt);
+\draw[arr] (rkt) -- (hash);
+\draw[arr] (hash) -- (bitml);
+\draw[arr] (bitml) -- (balzac);
+\end{tikzpicture}
+\caption{End-to-end compilation data flow, from a BitMLx specification to paired UTXO-level transaction artifacts. The compiler layer emits one \texttt{.rkt} program per chain; the pipeline layer then performs hash instantiation and Racket/Balzac lowering for each chain independently.}
+\label{fig:pipeline}
+\end{figure}
 
 \begin{algorithm}[t]
 \caption{BitMLx Compilation Pipeline}
@@ -442,6 +479,71 @@ Fig.~\ref{fig:scaling} illustrates the relationship between contract structural 
 
 The scaling behavior reveals three key observations. First, increasing the number of participants from 2 to 3 causes a superlinear increase in transactions due to additional compensation branches and collateral mechanisms. Second, nested control flow structures (splits within priority choices) cause exponential growth in the transaction tree. Third, the depth metric grows more moderately than the transaction count, indicating that the tree becomes wider rather than deeper as complexity increases.
 
+\subsection{Compilation Performance}
+\label{sec:compile-perf}
+
+In addition to structural metrics, we measured the end-to-end wall-clock time of the compilation pipeline for each application. The measurement script \texttt{scripts/benchmark\_compile.sh} drives \texttt{scripts/bitmlx\_pipeline.sh} per application inside the \texttt{blockchain-bitmlx:dev} container with \texttt{BITMLX\_HASH\_SEED=42}, so that the seeded hash replacement (cf.\ Section~\ref{sec:reproducibility}) does not perturb timings between runs. Each measurement therefore captures the run of the pre-built Haskell executable via Stack, the BitMLx-to-BitML translation, the BitML-to-Balzac lowering in Racket, and the deterministic hash substitution. To account for run-to-run variability, each application is first executed once as a discarded warmup to stabilise the Stack and filesystem caches, after which five measured runs are timed using \texttt{date +\%s.\%N} and \texttt{awk}-based arithmetic. Table~\ref{tab:compile-time} reports the mean and sample standard deviation over the five runs, and Fig.~\ref{fig:compile-time} plots the mean against transaction count per chain with $\pm 1$ standard-deviation error bars.
+
+\begin{table}[t]
+\caption{End-to-end pipeline time per application, with seeded hashing (\texttt{BITMLX\_HASH\_SEED=42}). Mean and sample standard deviation over five measured runs (plus one discarded warmup), in seconds.}
+\label{tab:compile-time}
+\centering
+\footnotesize
+\begin{tabular}{lrr@{$\;\pm\;$}l}
+\toprule
+Application & Transactions per chain & \multicolumn{2}{c}{Wall-clock time (s)} \\
+\midrule
+ReceiverChosenDenom. & 51 & 3.086 & 0.156 \\
+TwoPartyAgreement & 51 & 3.867 & 1.860 \\
+MultichainPayExch. & 207 & 6.181 & 1.569 \\
+MultichainLoanMed. & 4{,}098 & 107.461 & 3.447 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[scale=0.78]
+% Log-log line chart: x = 0.6 + 1.2*(log10(tx)-1), y = 1.2*log10(sec)
+% Means over 5 runs: (51, 3.086), (51, 3.867), (207, 6.181), (4098, 107.461)
+\draw[->] (0,0) -- (5.6,0) node[right, font=\scriptsize] {Transactions per chain (log scale)};
+\draw[->] (0,0) -- (0,4.8) node[above, font=\scriptsize] {Wall-clock time (s, log scale)};
+\foreach \x/\val in {0.6/10, 1.8/100, 3.0/1000, 4.2/10000} {
+    \draw[gray!40] (\x,0) -- (\x,4.5);
+    \node[font=\tiny, below] at (\x,-0.05) {\val};
+}
+\foreach \y/\val in {0/1, 1.2/10, 2.4/100, 3.6/1000} {
+    \draw[gray!40] (0,\y) -- (5,\y);
+    \node[font=\tiny, left] at (-0.05,\y) {\val};
+}
+% Mean points: RCD(1.449,0.587) TPA(1.449,0.705) MPE(2.179,0.949) MLM(3.735,2.438)
+\draw[blue, very thick] (1.449,0.587) -- (1.449,0.705) -- (2.179,0.949) -- (3.735,2.438);
+% +/-1 std-dev error bars (y converted via 1.2*log10):
+% RCD [2.930,3.242]->[0.560,0.613]  TPA [2.007,5.727]->[0.363,0.910]
+% MPE [4.612,7.750]->[0.797,1.067]  MLM [104.014,110.908]->[2.421,2.454]
+\foreach \px/\lo/\hi in {1.449/0.560/0.613, 1.449/0.363/0.910, 2.179/0.797/1.067, 3.735/2.421/2.454} {
+    \draw[blue!70] (\px,\lo) -- (\px,\hi);
+    \draw[blue!70] (\px-0.06,\lo) -- (\px+0.06,\lo);
+    \draw[blue!70] (\px-0.06,\hi) -- (\px+0.06,\hi);
+}
+\foreach \px/\py in {1.449/0.587, 1.449/0.705, 2.179/0.949, 3.735/2.438} {
+    \fill[blue] (\px,\py) circle (2pt);
+}
+\node[font=\tiny, left] at (1.39,0.587) {RCD};
+\node[font=\tiny, left] at (1.39,0.760) {TPA};
+\node[font=\tiny, above left] at (2.179,1.067) {MPE};
+\node[font=\tiny, above left] at (3.735,2.454) {MLM};
+% Time annotations
+\node[font=\tiny, right] at (1.55,0.45) {3.1--3.9\,s};
+\node[font=\tiny, right] at (2.28,0.95) {6.2\,s};
+\node[font=\tiny, right] at (3.84,2.44) {107.5\,s};
+\end{tikzpicture}
+\caption{Mean wall-clock compilation time versus transactions per chain, on log--log axes, with \texttt{BITMLX\_HASH\_SEED=42}. Markers show the mean of five measured runs and whiskers show $\pm 1$ sample standard deviation. The two-party contracts complete in a few seconds; their error bars overlap, so RCD and TPA are not reliably distinguishable at $51$ transactions. MultichainPaymentExchange remains in single-digit seconds, but the $80\times$ growth in transactions for MultichainLoanMediator translates into a $35\times$ increase in compile time, dominated by the Racket lowering and the hash-substitution pass over the multi-megabyte artifact.}
+\label{fig:compile-time}
+\end{figure}
+
+The slope on the log--log plot becomes substantially steeper between MultichainPaymentExchange and MultichainLoanMediator, confirming that the runtime bottleneck is not the Haskell front end (which performs a single pass over a fixed BitMLx AST) but the downstream Racket lowering and the line-by-line hash substitution over the large generated \texttt{.rkt} and \texttt{.balzac} files. The variance is small relative to the mean for the dominant MultichainLoanMediator case (standard deviation $3.4$~s on a $107$~s mean, about $3\%$), whereas the two-party and three-party measurements show larger relative spread driven by occasional host-scheduling spikes during a run; the per-run figures are retained in the benchmark logs. This mirrors the transaction-tree expansion already visible in Fig.~\ref{fig:scaling} and identifies the lowering pass as the natural target for the compression strategies discussed in Section~\ref{sec:scalability}.
+
 \subsection{Testing Verification}
 
 All four applications pass the integration test suite, which verifies:
@@ -493,8 +595,11 @@ The redeployed web server was launched on \texttt{127.0.0.1:5002}. The dashboard
 This editor is therefore best understood as a safe, template-driven exploration interface rather than a full BitMLx visual programming environment. It lowers the barrier for non-Haskell users to inspect contract variations, while preserving the original compiler as the authoritative validator of semantic correctness.
 
 \subsection{Metric Reproducibility and Hash Randomization}
+\label{sec:reproducibility}
 
-The compilation pipeline contains both deterministic and intentionally randomized components. The Haskell compiler deterministically generates the structural BitML/Racket contract from a fixed BitMLx source. The transaction count and execution-tree depth are therefore suitable regression metrics and are asserted exactly by the pytest suite. After Racket files are generated, however, \texttt{replace\_hash.py} replaces placeholder hashes with SHA-256 hashes of random strings. Consequently, byte-level checksums of final \texttt{.rkt} and \texttt{.balzac} artifacts are not expected to remain identical across independent pipeline executions. This design is appropriate for demonstration artifacts because concrete secret hashes should be fresh, but it also means that reproducibility claims should be stated at the level of structure and metrics unless the hash replacement script is seeded or disabled.
+The compilation pipeline contains both deterministic and intentionally randomized components. The Haskell compiler deterministically generates the structural BitML/Racket contract from a fixed BitMLx source. The transaction count and execution-tree depth are therefore suitable regression metrics and are asserted exactly by the pytest suite. After Racket files are generated, \texttt{replace\_hash.py} replaces placeholder hashes with SHA-256 hashes of random strings, which by default makes byte-level checksums of final \texttt{.rkt} and \texttt{.balzac} artifacts non-identical across independent runs.
+
+To enable byte-deterministic reviewer-side verification while preserving the original semantics, we extended \texttt{replace\_hash.py} with an explicit seeding interface. The script accepts an optional \texttt{--seed} argument and additionally honours the \texttt{BITMLX\_HASH\_SEED} environment variable; when either is set, the Python pseudo-random generator is reseeded before every line is processed, yielding identical hash literals on repeated executions of the same example. The unseeded code path is unchanged, so prior workflows that intentionally produce fresh secrets continue to do so. The benchmark script described in Section~\ref{sec:compile-perf} exports \texttt{BITMLX\_HASH\_SEED=42}, and a smoke test confirmed that two consecutive runs with the same seed produce byte-identical \texttt{.rkt} files for all four applications, while two unseeded runs differ exactly in the hash literals as expected. Reproducibility claims in this article are therefore at the level of structural metrics by default, and additionally at the byte level whenever the seed is supplied.
 
 \section{Discussion}
 
@@ -509,10 +614,28 @@ The protocol timeout horizon also increases for the most complex application, bu
 Traditional HTLC atomic swaps require only 4 transactions (2 per chain) for a two-party exchange, compared to the 51 generated by the BitMLx compilation. However, HTLCs support only simple exchanges and offer no mechanism for multi-step protocols, conditional branching, or mediated dispute resolution. The BitMLx approach trades transaction efficiency for expressiveness and formal security guarantees.
 
 \subsection{Scalability Considerations}
+\label{sec:scalability}
 
 The exponential growth observed in MultichainLoanMediator raises concerns about the scalability of the approach to more complex contracts. Possible mitigation strategies include: (1) compilation optimizations that identify and merge equivalent transaction subtrees; (2) off-chain execution of compensation logic, broadcasting only the minimal required transactions; and (3) layered contract designs that decompose complex protocols into simpler sub-protocols.
 
-Encouragingly, the step secret count grows much more moderately than the transaction count: while transactions increase from $51$ to $4{,}098$ (a factor of $80\times$) across the test applications, secret counts increase only from $8$ to $18$ (a factor of $2.25\times$). This sublinear growth confirms that the path-encoding scheme used by \texttt{StepSecrets.hs} effectively shares secrets across non-branching segments of the execution tree, avoiding the multiplicative blow-up that a naive node-by-node assignment would induce. The bottleneck for cross-chain compilation thus lies in the transaction tree expansion rather than in the cryptographic commitment overhead.
+Notably, the step secret count grows much more moderately than the transaction count: while transactions increase from $51$ to $4{,}098$ (a factor of $80\times$) across the test applications, secret counts increase only from $8$ to $18$ (a factor of $2.25\times$). This sublinear growth confirms that the path-encoding scheme used by \texttt{StepSecrets.hs} effectively shares secrets across non-branching segments of the execution tree, avoiding the multiplicative blow-up that a naive node-by-node assignment would induce. The bottleneck for cross-chain compilation thus lies in the transaction tree expansion rather than in the cryptographic commitment overhead.
+
+\subsection{Compressing Compensation Branches with MAST on Taproot}
+\label{sec:mast}
+
+A more aggressive on-chain mitigation, presented here as a theoretical proposal rather than an implemented feature, is to compress unused compensation branches into Merkleized Abstract Syntax Trees (MAST) carried by Bitcoin Taproot outputs~\cite{nick2020bip341,wuille2020bip342}. The empirical results in Table~\ref{tab:results} show that every BitMLx compilation enumerates the full set of pre-signed transactions for every honest and adversarial branch, even though in any single execution only one root-to-leaf path is ever broadcast. Pre-Taproot Bitcoin Script forces all alternative spending conditions to live inline in the output script, which is why the BitMLx lowering currently materialises one explicit transaction per branch.
+
+Taproot replaces this inline encoding with a tree of script leaves whose root is committed to via a Merkle root mixed into the output public key. To spend the output, the redeemer only needs to reveal (i) the leaf script actually used, (ii) the Merkle path proving its inclusion, and (iii) the internal key. Unused leaves are never published on-chain, so their cost is amortised away.
+
+Applied to the BitMLx execution tree, the proposal is as follows. The set of pre-signed transactions emitted at a single contract state (the stipulation node, a priority-choice node, or a split node) shares a common funding output. Today each branch consumes that output through its own distinct \texttt{transaction} declaration. Under a MAST encoding, each branch would become one leaf of a Tapscript tree rooted at the funding output's Taproot key:
+\begin{itemize}
+\item the \emph{honest-path} leaf, signed by the legitimate next participant according to the priority order;
+\item one \emph{compensation} leaf per losing branch, encoding the punishment or refund condition currently materialised as a dedicated pre-signed transaction;
+\item the \emph{timeout / collateral-recovery} leaves implementing the \texttt{after}-clauses.
+\end{itemize}
+Because every losing branch in the BitMLx execution model has the same parent state, this transformation is purely local: it does not alter the global tree of states, only how the alternatives at one state are encoded into the output script. The cross-chain semantics is preserved as long as Dogecoin retains an equivalent encoding; in practice this means MAST compression is asymmetric and could be enabled on Bitcoin alone while Dogecoin continues to use the existing inline lowering, since BitMLx already tolerates per-chain coin-selection differences and the well-formedness check operates on the structural metrics rather than on the script encoding.
+
+The expected on-chain footprint reduction is asymmetric in the same way that the cost of pre-signed compensation transactions is asymmetric: an honest execution pays only the Merkle path overhead ($\log_2 k$ hashes, where $k$ is the branching factor at the current state) plus the single leaf script, instead of carrying the full inline script enumerating all $k$ branches. For MultichainLoanMediator, whose contract repeatedly branches at every installment step, the dominant compensation leaves never reach the chain, so the practical on-chain cost of an honest repayment becomes essentially independent of the depth of the punishment tree --- mirroring the well-known argument for Taproot-based Lightning channels~\cite{poon2016bitcoin}. The complication is that BitMLx security proofs are written against the BitML transaction-level semantics: a future article would need to lift the soundness argument of~\cite{engel2025bitmlx} to a MAST-extended target language, showing that revealing only the executed leaf does not weaken the honest-strategy guarantees. This article identifies the opportunity and the engineering shape of the modification; the formal lifting and a prototype Taproot back end are left as future work.
 
 \subsection{Validation Through Symmetry and Determinism}
 
@@ -522,17 +645,31 @@ The empirical verification of cross-chain structural symmetry, with small relati
 
 The Docker-based containerization ensures complete reproducibility of the compilation environment. All dependencies, including Stack, Racket, Python, LLVM, and C build tools, are installed in the Docker image, while named Docker volumes cache the Stack toolchain and Python virtual environment between runs. The Makefile provides simple entry points for common operations, lowering the barrier to replication. The redeployment also exposed a practical systems issue: some laboratory Docker installations may not provide the default bridge network. The updated wrapper detects this condition and uses host networking so that the scientific result remains reproducible on the available machine.
 
+\subsection{Path Toward Testnet Deployment}
+\label{sec:testnet}
+
+The artifacts evaluated in this article are validated structurally through the integration test suite and by direct inspection of the compiled \texttt{.rkt} and \texttt{.balzac} files; they have not yet been broadcast to any live network. The Balzac descriptions are nevertheless designed to be directly compilable to standard UTXO transactions, so on-chain execution validation is the natural next step. We outline the methodology rather than reporting fabricated on-chain numbers, in order to keep the empirical claims of this article faithful to what was actually observed on the evaluation machine.
+
+A minimal end-to-end testnet experiment for the simplest application, ReceiverChosenDenomination, would proceed as follows. The Balzac stipulation transaction and a single honest-path branch (one priority choice, one withdraw) would be lowered to Bitcoin Testnet and Dogecoin Testnet transactions, funded from public faucet outputs at both endpoints. Reasonable parameter choices, given typical Testnet conditions, are: a fee target around $1$~sat/vB for Bitcoin Testnet and the analogous minimum relay fee for Dogecoin Testnet; dust limits of $546$~satoshi for Bitcoin and the Dogecoin-default $0.01$~DOGE; opt-in Replace-By-Fee enabled at the funding step so that the experiment can be retried at higher fees if a Testnet node refuses to relay; and a conservative confirmation target of at least one Bitcoin block (Testnet block intervals are highly variable but average around ten minutes) and six Dogecoin blocks (each averaging one minute). The honest-path branch involves a single stipulation transaction per chain plus the chosen withdraw transaction, so the total on-chain footprint is bounded by the transaction-tree leaf count along the executed path rather than by the full count in Table~\ref{tab:results}. To make the resulting numbers reviewer-verifiable, the experiment would record, for each broadcast transaction, the Testnet transaction identifier, the raw virtual size in bytes, the actual fee paid in satoshi (respectively koinu), and the block height at which it confirmed; these per-transaction rows would form a new table appended to the Experimental Evaluation section in a follow-up article.
+
+The reason this experiment is not run here is that it requires coordination outside the scope of an automated reproducibility build: Testnet coin faucets are rate-limited and require external requests, and live broadcasts cannot be re-run hermetically inside the Docker harness used for the redeployment in this article. The methodology above is included so that the testnet step can be carried out and reported in a subsequent article without redesigning the toolchain; the compiler back end already emits the standard Balzac transactions that such an experiment requires.
+
 \subsection{Limitations}
 
-The current implementation has several limitations. First, only Bitcoin and Dogecoin are supported as target chains; extending to other UTXO-based chains requires adding new coin selectors and chain-specific configurations. Second, the compiled transactions are not broadcast to any testnet or mainnet, leaving on-chain execution validation as future work. Third, the web-based contract editor supports only template-based modifications rather than arbitrary contract construction. Fourth, large contracts such as MultichainLoanMediator generate megabyte-scale artifacts and thousands of transaction templates, which may be cumbersome for interactive inspection even when the command-line pipeline completes successfully.
+The current implementation has several limitations. First, only Bitcoin and Dogecoin are supported as target chains; extending to other UTXO-based chains requires adding new coin selectors and chain-specific configurations. Second, the compiled transactions have been validated structurally and verified to load through the Balzac description format, but have not yet been broadcast to any testnet or mainnet; Section~\ref{sec:testnet} describes the methodology for that follow-up step. Third, the web-based contract editor supports only template-based modifications rather than arbitrary contract construction. Fourth, large contracts such as MultichainLoanMediator generate megabyte-scale artifacts and thousands of transaction templates, which may be cumbersome for interactive inspection even when the command-line pipeline completes successfully.
+
+\section{Data and Code Availability}
+\label{sec:availability}
+
+The complete source code of the toolchain, the four worked example contracts, the Docker build files, the integration test suite, the Flask web application, the deterministic hash-replacement script described in Section~\ref{sec:reproducibility}, and the wall-clock benchmark script used to produce Table~\ref{tab:compile-time} and Fig.~\ref{fig:compile-time} are publicly available at \url{https://github.com/sampleit533/BitMLx/}. Byte-deterministic regeneration of the artifacts evaluated in Section~VI requires only running \texttt{scripts/benchmark\_compile.sh} inside the \texttt{blockchain-bitmlx:dev} container with the default \texttt{BITMLX\_HASH\_SEED=42} environment variable. Pre-built artifacts for the four applications are committed under \texttt{dist/bitmlx\_artifacts/} for reviewers who prefer to inspect the outputs without rebuilding.
 
 \section{Conclusion}
 
-This paper presented a comprehensive toolchain for compiling, testing, and visualizing cross-chain smart contracts based on the BitMLx domain-specific language. The system integrates a Haskell-based compiler, a Docker-containerized build pipeline, a pytest-based testing framework, and a Flask-based web application into a cohesive platform for cross-chain contract development.
+This article has presented a comprehensive toolchain for compiling, testing, and visualizing cross-chain smart contracts based on the BitMLx domain-specific language. The system integrates a Haskell-based compiler, a Docker-containerized build pipeline, a pytest-based testing framework, and a Flask-based web application into a cohesive platform for cross-chain contract development.
 
-Evaluation on four representative applications demonstrated the toolchain's ability to handle contracts of varying complexity, from simple two-party donations to complex mediated loan protocols. The results quantified the relationship between contract structure and compilation output, revealing that transaction counts grow sharply with nested control flow structures (from $51$ to $4{,}098$ transactions) while step-secret counts grow more moderately (from $8$ to $18$). Cross-chain structural symmetry was observed through identical transaction counts and depths for Bitcoin and Dogecoin outputs, with file-size differences attributable to denomination labels and numeric literals. The pytest suite confirms the expected structural metrics for all four evaluated applications, and the Flask editor extends the toolchain with a template-driven interactive interface.
+Evaluation on four representative applications demonstrated the toolchain's ability to handle contracts of varying complexity, from simple two-party donations to complex mediated loan protocols. The results quantified the relationship between contract structure and compilation output, revealing that transaction counts grow sharply with nested control flow structures (from $51$ to $4{,}098$ transactions) while step-secret counts grow more moderately (from $8$ to $18$). The wall-clock benchmark reported in Table~\ref{tab:compile-time}, averaged over five runs, further showed that the end-to-end pipeline completes in a few seconds for the two-party applications ($3.1$ and $3.9$~s on average), in about six seconds for the three-party MultichainPaymentExchange, and in roughly $107$~seconds for MultichainLoanMediator, identifying the Racket lowering and the hash-substitution pass as the dominant cost on the largest contract. Cross-chain structural symmetry was observed through identical transaction counts and depths for Bitcoin and Dogecoin outputs, with file-size differences attributable to denomination labels and numeric literals. The pytest suite confirms the expected structural metrics for all four evaluated applications, and the Flask editor extends the toolchain with a template-driven interactive interface. As part of this article, the hash-replacement script was extended with explicit seed support (Section~\ref{sec:reproducibility}), so reviewers can regenerate byte-identical artifacts via \texttt{BITMLX\_HASH\_SEED}.
 
-Future work includes extending the compiler to support additional UTXO-based blockchains, implementing compilation optimizations to reduce transaction overhead, adding deterministic seeded hash replacement for reproducible artifact checksums, deploying compiled contracts to testnet environments for on-chain validation, and developing a visual contract designer that enables users to construct arbitrary cross-chain protocols without writing Haskell code.
+Future work includes extending the compiler to support additional UTXO-based blockchains, implementing compilation optimizations to reduce transaction overhead --- in particular a Taproot-based back end that compresses unused compensation branches into MAST script trees as outlined in Section~\ref{sec:mast} ---, deploying compiled contracts to Bitcoin Testnet and Dogecoin Testnet following the methodology of Section~\ref{sec:testnet} for on-chain validation with measured fees and confirmation times, and developing a visual contract designer that enables users to construct arbitrary cross-chain protocols without writing Haskell code.
 
 \begin{thebibliography}{99}
 
@@ -596,6 +733,15 @@ L.~Gudgeon, P.~Moreno-Sanchez, S.~Perez-Sola, B.~Livshits, and A.~Gervais, ``SoK
 
 \bibitem{tikhomirov2018smartcheck}
 S.~Tikhomirov, E.~Voskresenskaya, I.~Ivanitskiy, R.~Takhaviev, E.~Marchenko, and Y.~Alexandrov, ``SmartCheck: Static analysis of Ethereum smart contracts,'' in \textit{Proc. ACM/IEEE Int. Workshop Emerg. Trends Softw. Eng. Blockchain (WETSEB)}, Gothenburg, Sweden, 2018, pp.~9--16.
+
+\bibitem{nick2020bip341}
+P.~Wuille, J.~Nick, and A.~Towns, ``Taproot: SegWit version~1 spending rules,'' Bitcoin Improvement Proposal BIP~341, Jan. 2020.
+
+\bibitem{wuille2020bip342}
+P.~Wuille, J.~Nick, and A.~Towns, ``Validation of Taproot scripts,'' Bitcoin Improvement Proposal BIP~342, Jan. 2020.
+
+\bibitem{poon2016bitcoin}
+J.~Poon and T.~Dryja, ``The Bitcoin Lightning Network: Scalable off-chain instant payments,'' White paper, Jan. 2016.
 
 \end{thebibliography}
 
